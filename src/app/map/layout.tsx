@@ -1,4 +1,5 @@
 import SideBar from "../../components/Sidebar";
+import Map from "@/components/Map";
 
 type DashboardLayoutProps = {
   children: React.ReactNode;
@@ -12,10 +13,15 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className=" w-[30%]  ">
               <SideBar></SideBar>
             </div>
-            <div className=" bg-[#F1F2F5]  flex  ">{children}</div>
+            <div className=" bg-[#F1F2F5]  flex  flex-col container border-red-400 border-4 h-[1000px] w-[1200px] mx-auto ">
+              {children}
+              <Map />
+            </div>
           </div>
         </div>
       </main>
     </div>
   );
 }
+
+// className="container border-red-400 border-4 h-[1000px] w-[1200px] mx-auto
