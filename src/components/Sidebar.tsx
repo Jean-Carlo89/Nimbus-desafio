@@ -33,7 +33,9 @@ export default function SideBar() {
         </MenuLink>
 
         <div className="pb-[50px] border-yellow-400 border-2 w-[80%] mt-[20px]">
-          <div className="mx-auto border-red-400 border-2 flex justify-center">Pontos </div>
+          <div className="mx-auto border-red-400 border-2 flex justify-center text-white">
+            Pontos <span className="ml-[10px]">+</span>
+          </div>
 
           <ul className="flex flex-col justify-center  w-full h-fit border-green-500 border-4">
             {pontos.map((ponto) => {

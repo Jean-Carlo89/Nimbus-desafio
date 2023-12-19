@@ -12,6 +12,20 @@ import { useGlobalContext } from "@/context/initialGeoCode";
 export default function Map() {
   //scrollWheelZoom={false}
 
+  const [markers, setMarkers] = useState([]);
+
+  useEffect(() => {
+    return setMarkers(fake_markers);
+  }, []);
+
+  useEffect(() => {
+    const storedGeoCode = localStorage.getItem("initialGeoCode");
+    if (storedGeoCode) {
+      const { lat, long, zoom } = JSON.parse(storedGeoCode);
+      setInitialGeoCode({ lat, long, zoom });
+    }
+  }, []);
+
   const [rectangleBounds, setRectangleBounds] = useState(L.latLngBounds(L.latLng(0, 0), L.latLng(0, 0)));
 
   const { initialGeoCode, setInitialGeoCode } = useGlobalContext();
@@ -32,30 +46,42 @@ export default function Map() {
       </div>
     </div>
   );
-}
 
-function Markers() {
-  const map = useMapEvents({
-    click(e) {
-      console.log(e);
-      //  markers.push(e.latlng);
-      //setMarkers((prevValue) => [...prevValue, e.latlng]);
-    },
-  });
+  function Markers() {
+    const map = useMapEvents({
+      click(e) {
+        console.log(e);
+        console.log(markers);
+        // markers.push({
+        //   geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
+        //   popUp: "still not ready",
+        // });
 
-  return (
-    <>
-      {markers.map((marker, i) => {
-        return (
-          <div key={i}>
-            <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
-              <Popup>{marker.popUp || "No description"}</Popup>
-            </Marker>{" "}
-          </div>
-        );
-      })}
-    </>
-  );
+        // setMarkers((prevValue) => [...prevValue, e.latlng]);
+        setMarkers((prevValue) => [
+          ...prevValue,
+          {
+            geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
+            popUp: "still not ready",
+          },
+        ]);
+      },
+    });
+
+    return (
+      <>
+        {markers.map((marker, i) => {
+          return (
+            <div key={i}>
+              <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
+                <Popup>{marker.popUp || "No description"}</Popup>
+              </Marker>{" "}
+            </div>
+          );
+        })}
+      </>
+    );
+  }
 }
 
 export const RecenterAutomatically = ({ lat, lng, zoom }) => {
@@ -75,21 +101,7 @@ export const RecenterAutomatically = ({ lat, lng, zoom }) => {
   return null;
 };
 
-// export const RecenterAutomatically = ({ lat, lng, zoom }) => {
-//   console.log(lat, lng, zoom);
-//   const map = useMap();
-
-// if()
-
-//   //map.setView([lat, lng], zoom);
-//   useEffect(() => {
-//     console.log("testing");
-//     map.setView([lat, lng], zoom);
-//   }, [lat, lng]);
-//   return null;
-// };
-
-const markers = [
+const fake_markers = [
   {
     geoCode: { lat: -12.99314730803216, lng: -38.514737784862525 },
     popUp: "Test House1",
