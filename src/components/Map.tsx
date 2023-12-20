@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
@@ -8,15 +8,22 @@ import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "leaflet-defaulticon-compatibility";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import { useGlobalContext } from "@/context/initialGeoCode";
+import { Markers } from "@/app/map/layout";
+import axios from "axios";
 
-export default function Map() {
+type MapProps = {
+  mapData: Markers[];
+  setMapData: Dispatch<SetStateAction<Markers[]>>;
+};
+
+export default function Map({ mapData, setMapData }: MapProps) {
   //scrollWheelZoom={false}
 
-  const [markers, setMarkers] = useState([]);
+  //const [markers, setMarkers] = useState([]);
 
-  useEffect(() => {
-    return setMarkers(fake_markers);
-  }, []);
+  // useEffect(() => {
+  //   return setMarkers(fake_markers);
+  // }, []);
 
   useEffect(() => {
     const storedGeoCode = localStorage.getItem("initialGeoCode");
@@ -49,28 +56,48 @@ export default function Map() {
 
   function Markers() {
     const map = useMapEvents({
-      click(e) {
+      async click(e) {
         console.log(e);
-        console.log(markers);
-        // markers.push({
-        //   geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
-        //   popUp: "still not ready",
-        // });
 
-        // setMarkers((prevValue) => [...prevValue, e.latlng]);
-        setMarkers((prevValue) => [
-          ...prevValue,
-          {
-            geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
-            popUp: "still not ready",
-          },
-        ]);
+        console.log({ mapData: mapData });
+
+        const marker_value = {
+          id: `${e.latlng.lat + 1}`,
+          geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
+          popUp: "still not ready",
+        };
+
+        try {
+          const result = await axios.post("http://localhost:3001/markers", marker_value);
+
+          if (result.status === 201) {
+            setMapData((prevValue) => [
+              ...prevValue,
+              {
+                geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
+                popUp: "still not ready",
+              },
+            ]);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+
+        // console.log(markers);
+
+        // setMarkers((prevValue) => [
+        //   ...prevValue,
+        //   {
+        //     geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
+        //     popUp: "still not ready",
+        //   },
+        // ]);
       },
     });
 
     return (
       <>
-        {markers.map((marker, i) => {
+        {mapData.map((marker, i) => {
           return (
             <div key={i}>
               <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
@@ -79,6 +106,15 @@ export default function Map() {
             </div>
           );
         })}
+        {/* {markers.map((marker, i) => {
+          return (
+            <div key={i}>
+              <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
+                <Popup>{marker.popUp || "No description"}</Popup>
+              </Marker>{" "}
+            </div>
+          );
+        })} */}
       </>
     );
   }
