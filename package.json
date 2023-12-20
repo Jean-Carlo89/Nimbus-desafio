@@ -3,12 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "concurrently \"npm run serve-json\" \"next dev\"",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "serve-json": "json-server --watch ./src/mocks/db.json --port 3001"
   },
   "dependencies": {
+    "axios": "^1.6.2",
+    "json-server": "^0.17.4",
     "leaflet": "^1.9.4",
     "leaflet-defaulticon-compatibility": "^0.1.2",
     "next": "14.0.3",
@@ -25,6 +28,7 @@
     "@types/react-dom": "^18",
     "@types/react-leaflet": "^3.0.0",
     "autoprefixer": "^10.0.1",
+    "concurrently": "^8.2.2",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "postcss": "^8",
