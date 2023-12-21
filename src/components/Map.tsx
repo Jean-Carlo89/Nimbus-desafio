@@ -8,22 +8,17 @@ import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "leaflet-defaulticon-compatibility";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import { Markers } from "@/app/map/layout";
+import { Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
+import { useAddMarker } from "@/hooks/useAddMarker";
 
 type MapProps = {
-  mapData: Markers[];
-  setMapData: Dispatch<SetStateAction<Markers[]>>;
+  mapData: appMarker[];
+  setMapData: Dispatch<SetStateAction<appMarker[]>>;
 };
 
 export default function Map({ mapData, setMapData }: MapProps) {
-  //scrollWheelZoom={false}
-
-  //const [markers, setMarkers] = useState([]);
-
-  // useEffect(() => {
-  //   return setMarkers(fake_markers);
-  // }, []);
+  
 
   useEffect(() => {
     const storedGeoCode = localStorage.getItem("initialGeoCode");
@@ -61,66 +56,43 @@ export default function Map({ mapData, setMapData }: MapProps) {
 
         console.log({ mapData: mapData });
 
-        const marker_value = {
-          id: `${e.latlng.lat + 1}`,
-          geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
-          popUp: "still not ready",
-        };
+const marker : appMarker = {
+  id: e.latlng.lat + 1,
+  geoCode: {
+    lat: e.latlng.lat,
+    lng: e.latlng.lng
+  },
+  popUp:  ""
+}
 
-        try {
-          const result = await axios.post("http://localhost:3001/markers", marker_value);
+await useAddMarker(marker, setMapData)
 
-          if (result.status === 201) {
-            setMapData((prevValue) => [
-              ...prevValue,
-              {
-                geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
-                popUp: "still not ready",
-              },
-            ]);
-          }
-        } catch (error) {
-          console.log(error);
-        }
-
-        // console.log(markers);
-
-        // setMarkers((prevValue) => [
-        //   ...prevValue,
-        //   {
-        //     geoCode: { lat: e.latlng.lat, lng: e.latlng.lng },
-        //     popUp: "still not ready",
-        //   },
-        // ]);
+        
       },
     });
 
     return (
       <>
         {mapData.map((marker, i) => {
-          return (
+
+if(marker.is_active){
+  return (
             <div key={i}>
               <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
                 <Popup>{marker.popUp || "No description"}</Popup>
               </Marker>{" "}
             </div>
           );
+}
+        
         })}
-        {/* {markers.map((marker, i) => {
-          return (
-            <div key={i}>
-              <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
-                <Popup>{marker.popUp || "No description"}</Popup>
-              </Marker>{" "}
-            </div>
-          );
-        })} */}
+        
       </>
     );
   }
 }
 
-export const RecenterAutomatically = ({ lat, lng, zoom }) => {
+export const RecenterAutomatically = ({ lat, lng, zoom } : {lat:number, lng:number, zoom:number}) => {
   const map = useMap();
 
   useEffect(() => {
@@ -137,24 +109,24 @@ export const RecenterAutomatically = ({ lat, lng, zoom }) => {
   return null;
 };
 
-const fake_markers = [
-  {
-    geoCode: { lat: -12.99314730803216, lng: -38.514737784862525 },
-    popUp: "Test House1",
-  },
+// const fake_markers = [
+//   {
+//     geoCode: { lat: -12.99314730803216, lng: -38.514737784862525 },
+//     popUp: "Test House1",
+//   },
 
-  {
-    geoCode: { lat: -12.991945078416206, lng: -38.51488262414933 },
-    popUp: "Test H 2",
-  },
+//   {
+//     geoCode: { lat: -12.991945078416206, lng: -38.51488262414933 },
+//     popUp: "Test H 2",
+//   },
 
-  {
-    geoCode: { lat: -12.992765731436737, lng: -38.51791352033615 },
-    popUp: "Test Ho 3",
-  },
+//   {
+//     geoCode: { lat: -12.992765731436737, lng: -38.51791352033615 },
+//     popUp: "Test Ho 3",
+//   },
 
-  {
-    geoCode: { lat: -12.993204805824472, lng: -38.51486116647721 },
-    popUp: "Test Ho 4",
-  },
-];
+//   {
+//     geoCode: { lat: -12.993204805824472, lng: -38.51486116647721 },
+//     popUp: "Test Ho 4",
+//   },
+//];

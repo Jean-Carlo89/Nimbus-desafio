@@ -13,8 +13,7 @@ type MenuLinkProps = {
 export default function MenuLink(props: MenuLinkProps) {
   const pathname = usePathname();
 
-  console.log(pathname);
-  //bg-[#C18E47]
+  
   return (
     <Link href={props.href} className={pathname === props.href ? props.className + " bg-[#d18e30]" : props.className}>
       {props.children}
