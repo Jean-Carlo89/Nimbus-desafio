@@ -1,7 +1,7 @@
 "use client";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap, FeatureGroup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
@@ -11,6 +11,8 @@ import { useGlobalContext } from "@/context/initialGeoCode";
 import { Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
 import { useAddMarker } from "@/hooks/useAddMarker";
+import "leaflet-draw/dist/leaflet.draw.css"
+import {EditControl} from "react-leaflet-draw"
 
 type MapProps = {
   mapData: appMarker[];
@@ -35,13 +37,56 @@ export default function Map({ mapData, setMapData }: MapProps) {
   const [mapCenter, setMapCenter] = useState({ lat: -12.991341, lng: -38.516513 });
 
   // const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
+
+
+
+const onCreate = (e: any) =>{
+console.log("create")
+console.log(e)
+var layer = e.layer;
+
+    // Defina o estilo pontilhado aqui
+    // if (e.layerType === 'rectangle') {
+    //      layer.setStyle({
+    //         color: 'blue',      // Cor da linha
+    //         weight: 4,          // Espessura da linha
+    //         dashArray: '10, 5', // Padrão da linha pontilhada
+    //         opacity: 1          // Opacidade da linha
+    //     });
+    // }
+}
+
+const onEdit = (e: any) =>{
+console.log("edit")
+console.log(e)
+}
+
+const onDelete = (e: any) =>{
+console.log("deletee")
+console.log(e)
+}
+
   const [mapZoom, setMapZoom] = useState(13);
   return (
     <div className="container border-4 mx-auto">
       <div className="mx-auto ">
         <MapContainer center={[initialGeoCode.lat, initialGeoCode.long]} zoom={initialGeoCode.zoom} scrollWheelZoom={true}>
+
+<FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
+			stroke:true,
+			color: '#FF0000',
+			weight: 4,
+			opacity: 0.5,
+			fill: true,
+			fillColor: null, //same as color by default
+			fillOpacity: 0.2,
+			showArea: true,
+dashArray : '10, 5' ,
+			clickable: true
+		}}, polyline:false, circle:false,}} /> </FeatureGroup>
           <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <Markers />
+{/* <Rectangles/> */}
 
           <RecenterAutomatically lat={initialGeoCode.lat} lng={initialGeoCode.long} zoom={initialGeoCode.zoom} />
         </MapContainer>
@@ -62,10 +107,45 @@ const marker : appMarker = {
     lat: e.latlng.lat,
     lng: e.latlng.lng
   },
-  popUp:  ""
+  popUp: "",
+  is_active: true
 }
 
 await useAddMarker(marker, setMapData)
+
+        
+      },
+    });
+
+    return (
+      <>
+        {mapData.map((marker, i) => {
+
+if(marker.is_active){
+  return (
+            <div key={i}>
+              <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
+                <Popup>{marker.popUp || "No description"}</Popup>
+              </Marker>{" "}
+            </div>
+          );
+}
+        
+        })}
+        
+      </>
+    );
+  }
+
+ function Rectangles() {
+    const map = useMapEvents({
+      async dragend(e) {
+console.log("Dragging")
+        console.log(e);
+
+        console.log({ mapData: mapData });
+
+
 
         
       },
