@@ -1,7 +1,7 @@
 "use client";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import L from "leaflet";
-import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap, FeatureGroup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap, FeatureGroup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
 import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
@@ -18,6 +18,13 @@ type MapProps = {
   mapData: appMarker[];
   setMapData: Dispatch<SetStateAction<appMarker[]>>;
 };
+
+
+type CircleProps = {
+center : [number,number],
+radius:number
+description:string
+}
 
 export default function Map({ mapData, setMapData }: MapProps) {
   
@@ -36,16 +43,21 @@ export default function Map({ mapData, setMapData }: MapProps) {
 
   const [mapCenter, setMapCenter] = useState({ lat: -12.991341, lng: -38.516513 });
 
-  // const [mapCenter, setMapCenter] = useState({ lat: 51.505, lng: -0.09 });
+const [circles,setCircles] = useState<CircleProps[]>([{center:[-12.95621529620183, -38.484228586676785], radius: 800 , description:"initial"}])
+
+ 
 
 
 
-const onCreate = (e: any) =>{
+const onCreate = (e:any ) =>{
 console.log("create")
 console.log(e)
 var layer = e.layer;
 
-    // Defina o estilo pontilhado aqui
+console.log("layer")
+console.log(e.layer)
+
+  
     // if (e.layerType === 'rectangle') {
     //      layer.setStyle({
     //         color: 'blue',      // Cor da linha
@@ -54,6 +66,24 @@ var layer = e.layer;
     //         opacity: 1          // Opacidade da linha
     //     });
     // }
+
+
+console.log(e)
+const cirlce:CircleProps ={
+  center: [e.layer._latlng.lat, e.layer._latlng.lng],
+  radius: e.layer._mRadius,
+  description: ""
+}
+
+console.log({cirlce})
+
+
+    if (e.layerType === 'circle') {
+     setCircles((prevValue) => [
+              ...prevValue,
+            cirlce
+            ]);
+    }
 }
 
 const onEdit = (e: any) =>{
@@ -70,22 +100,27 @@ console.log(e)
   return (
     <div className="container border-4 mx-auto">
       <div className="mx-auto ">
-        <MapContainer center={[initialGeoCode.lat, initialGeoCode.long]} zoom={initialGeoCode.zoom} scrollWheelZoom={true}>
+        <MapContainer center={[initialGeoCode.lat, initialGeoCode.long]} zoom={initialGeoCode.zoom} scrollWheelZoom={true} >
 
 <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
 			stroke:true,
-			color: '#FF0000',
+			color: 'black',
 			weight: 4,
 			opacity: 0.5,
-			fill: true,
+			fill: false,
 			fillColor: null, //same as color by default
 			fillOpacity: 0.2,
 			showArea: true,
 dashArray : '10, 5' ,
 			clickable: true
-		}}, polyline:false, circle:false,}} /> </FeatureGroup>
+		}}, polyline:false, circle:true,}
+
+
+
+} /> </FeatureGroup>
           <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <Markers />
+<Circles/>
 {/* <Rectangles/> */}
 
           <RecenterAutomatically lat={initialGeoCode.lat} lng={initialGeoCode.long} zoom={initialGeoCode.zoom} />
@@ -93,6 +128,20 @@ dashArray : '10, 5' ,
       </div>
     </div>
   );
+function Circles(){
+
+const map = useMap()
+
+
+return circles.map((circle)=>{
+return <Circle  center={circle.center} radius={circle.radius} color="red" > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
+})
+
+
+
+}
+
+
 
   function Markers() {
     const map = useMapEvents({
