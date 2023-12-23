@@ -6,7 +6,6 @@ export async function fetchMarkers()  {
   
     const res = await fetch("http://localhost:3001/markers");
 
-    console.log(res);
 
     
 
@@ -22,19 +21,3 @@ export async function fetchMarkers()  {
   }
 }
 
-
-//  fetch("http://localhost:3001/markers")
-//       .then((res) => {
-//         res
-//           .json()
-//           .then((res) => {
-           
-           
-//           })
-//           .catch((e) => {
-//             console.log("Error parsing request");
-//           });
-//       })
-//       .catch((e) => {
-//         console.log(e);
-//       });

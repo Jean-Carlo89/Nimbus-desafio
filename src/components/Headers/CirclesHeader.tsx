@@ -42,12 +42,11 @@ const radius = form.radius;
       return; 
     }
 
-    console.log({form});
 if (form.lat !== null && form.long !== null && form.radius !==null) {
 
  
 
-console.log(e)
+
 const circle:CircleProps ={
   center: [form.lat, form.long],
   radius:form.radius,

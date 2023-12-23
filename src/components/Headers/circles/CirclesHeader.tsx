@@ -1,29 +1,19 @@
 "use client";
-import { Marker } from "@/app/map/layout";
+import { Circle, Marker } from "@/app/map/layout";
 import { useGlobalContext } from "@/context/initialGeoCode";
+import { useAddCircle } from "@/hooks/circles/useAddCircle";
 import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CircleProps } from "../../Map";
 
-
-
-type MarkersHeaderProps = {
-form: { lat: number, long: number , description: string },
-setForm: Dispatch<SetStateAction<{ lat: number, long: number , description: string }>>,
-setMarkers : Dispatch<SetStateAction<Marker[]>>;
-edit?: boolean
-updateMarker: ()=> any
-
-
+type CirclesHeaderProps = {
+circles: Circle[],
+setCircles : Dispatch<SetStateAction<Circle[]>>;
 }
 
-export default function MarkersHeader({setMarkers,edit=false, form,setForm , updateMarker}:MarkersHeaderProps) {
-
-
-
-
-
-
+export default function Header({circles,setCircles}:CirclesHeaderProps) {
+  const [form, setForm] = useState({ lat: null, long: null, description: null, radius:null });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,6 +23,7 @@ export default function MarkersHeader({setMarkers,edit=false, form,setForm , upd
     const lat = parseFloat(form.lat);
     const long = parseFloat(form.long);
     const description = form.description;
+const radius = form.radius;
 
    
     const invalidValues = [];
@@ -48,33 +39,27 @@ export default function MarkersHeader({setMarkers,edit=false, form,setForm , upd
     if (invalidValues.length > 0) {
      
       alert(`Please enter valid numeric values for ${invalidValues.join(", ")}.`);
-      return;
+      return; 
     }
 
-if (form.lat !== null && form.long !== null) {
+  
+if (form.lat !== null && form.long !== null && form.radius !==null) {
 
-const marker : Marker = {
+ 
+
+console.log(e)
+const circle:CircleProps ={
+  center: [form.lat, form.long],
+  radius:form.radius,
+  description: "",
   id: form.lat + 1,
-  geoCode: {
-    lat: form.lat,
-    lng: form.long
-  },
-  popUp: form.description || "",
 is_active:true
+
 }
-
-if(edit){
-
-await updateMarker()
-
-}else{
-await useAddMarker(marker, setMarkers)
-}
-
-
+useAddCircle(circle, setCircles)
 
   }else{
-alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valores colocados"
+alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique os valores colocados"
 )
 }
 
@@ -91,10 +76,9 @@ alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valo
   }
 
   return (
-
     <>
       <div className="border-red-400 border-4 ">
-        <h1 className=" text-2xl mb-[15px]">{ edit ? "Editar Ponto" :"Novo Ponto"}</h1>
+        <h1 className=" text-2xl mb-[15px]">Novo Perímetro</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
             <div className=" flex">
@@ -108,6 +92,11 @@ alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valo
             <div className=" flex">
               <h2 className="pr-[15px]">Longitude:</h2>
               <input onChange={onChange} value={form.long} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
+            </div>{" "}
+
+ <div className=" flex">
+              <h2 className="pr-[15px]">Raio:</h2>
+              <input onChange={onChange} value={form.radius} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Raio..."}></input>
             </div>{" "}
             <button className=" bg-[#104E8B]  text-white rounded w-[60px] flex justify-center ml-5">Salvar</button>
           </div>

@@ -12,7 +12,7 @@ export async function useAddCircle(props:Circle, setMarkers:  Dispatch<SetStateA
  try {
           const result = await axios.post("http://localhost:3001/circles", props);
 
-console.log(result.data)
+
 
           if (result.status === 201) {
             setMarkers((prevValue) => [

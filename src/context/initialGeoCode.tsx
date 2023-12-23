@@ -20,8 +20,7 @@ const GlobalContext = createContext<ContextProps>({
   },
   setInitialGeoCode: (): geoCode => {
     return { lat: 51.505, long: -0.09, zoom: 13 };
-    // data: [],
-    //setData: (): DataType[] => [],
+    
   },
 });
 
