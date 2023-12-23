@@ -8,25 +8,30 @@ import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "leaflet-defaulticon-compatibility";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import { Marker as appMarker } from "@/app/map/layout";
+import { Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
-import { useAddMarker } from "@/hooks/useAddMarker";
+import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import "leaflet-draw/dist/leaflet.draw.css"
 import {EditControl} from "react-leaflet-draw"
+import { useAddCircle } from "@/hooks/circles/useAddCircle";
 
 type MapProps = {
-  mapData: appMarker[];
-  setMapData: Dispatch<SetStateAction<appMarker[]>>;
+  markers: appMarker[];
+  setMarkers: Dispatch<SetStateAction<appMarker[]>>;
+ circles: appCircle[];
+  setCircles: Dispatch<SetStateAction<appCircle[]>>;
 };
 
 
-type CircleProps = {
+export type CircleProps = {
+id:any
 center : [number,number],
 radius:number
 description:string
+is_active:boolean
 }
 
-export default function Map({ mapData, setMapData }: MapProps) {
+export default function Map({ markers: mapData, setMarkers: setMapData, circles, setCircles }: MapProps) {
   
 
   useEffect(() => {
@@ -37,18 +42,9 @@ export default function Map({ mapData, setMapData }: MapProps) {
     }
   }, []);
 
-  const [rectangleBounds, setRectangleBounds] = useState(L.latLngBounds(L.latLng(0, 0), L.latLng(0, 0)));
 
   const { initialGeoCode, setInitialGeoCode } = useGlobalContext();
-
-  const [mapCenter, setMapCenter] = useState({ lat: -12.991341, lng: -38.516513 });
-
-const [circles,setCircles] = useState<CircleProps[]>([{center:[-12.95621529620183, -38.484228586676785], radius: 800 , description:"initial"}])
-
  
-
-
-
 const onCreate = (e:any ) =>{
 console.log("create")
 console.log(e)
@@ -68,39 +64,38 @@ console.log(e.layer)
     // }
 
 
+
+
+   if (e.layerType === 'circle') {
+
 console.log(e)
-const cirlce:CircleProps ={
+const circle:CircleProps ={
   center: [e.layer._latlng.lat, e.layer._latlng.lng],
   radius: e.layer._mRadius,
-  description: ""
+  description: "",
+  id: e.layer._latlng.lat + 1,
+is_active:true
+
+}
+useAddCircle(circle, setCircles)
+}
 }
 
-console.log({cirlce})
+// const onEdit = (e: any) =>{
+// console.log("edit")
+// console.log(e)
+// }
 
-
-    if (e.layerType === 'circle') {
-     setCircles((prevValue) => [
-              ...prevValue,
-            cirlce
-            ]);
-    }
-}
-
-const onEdit = (e: any) =>{
-console.log("edit")
-console.log(e)
-}
-
-const onDelete = (e: any) =>{
-console.log("deletee")
-console.log(e)
-}
+// const onDelete = (e: any) =>{
+// console.log("deletee")
+// console.log(e)
+// }
 
   const [mapZoom, setMapZoom] = useState(13);
   return (
     <div className="container border-4 mx-auto">
       <div className="mx-auto ">
-        <MapContainer center={[initialGeoCode.lat, initialGeoCode.long]} zoom={initialGeoCode.zoom} scrollWheelZoom={true} >
+        <MapContainer center={[initialGeoCode?.lat, initialGeoCode?.long]} zoom={initialGeoCode?.zoom} scrollWheelZoom={true} >
 
 <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
 			stroke:true,
@@ -123,18 +118,16 @@ dashArray : '10, 5' ,
 <Circles/>
 {/* <Rectangles/> */}
 
-          <RecenterAutomatically lat={initialGeoCode.lat} lng={initialGeoCode.long} zoom={initialGeoCode.zoom} />
+          <RecenterAutomatically lat={initialGeoCode?.lat} lng={initialGeoCode?.long} zoom={initialGeoCode?.zoom} />
         </MapContainer>
       </div>
     </div>
   );
 function Circles(){
 
-const map = useMap()
-
 
 return circles.map((circle)=>{
-return <Circle  center={circle.center} radius={circle.radius} color="red" > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
+return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
 })
 
 
