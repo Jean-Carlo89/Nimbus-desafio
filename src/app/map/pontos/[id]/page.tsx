@@ -1,17 +1,47 @@
 "use client";
-import { Marker } from "@/app/map/layout";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import { useAddMarker } from "@/hooks/useAddMarker";
 import axios from "axios";
-import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { Marker } from "../../layout";
 
-type MarkersHeaderProps = {
-markers: Marker[],
-setMarkers : Dispatch<SetStateAction<Marker[]>>;
+export default function PontoPage({ params }: { params: { id: string } }) {
+  const [form, setForm] = useState({ lat: null, long: null, description: null });
+
+async function updateMarker(){
+
+ const lat = parseFloat(form.lat);
+    const long = parseFloat(form.long);
+
+const body : Marker = {
+  id: params.id,
+  geoCode: {
+    lat,
+    lng: long
+  },
+  popUp: form.description || "",
+ is_active:true
+}
+const response = await axios.put(`http://localhost:3001/markers/${params.id}`,body)
+
+console.log(response)
+
 }
 
-export default function MarkersHeader({markers,setMarkers}:MarkersHeaderProps) {
-  const [form, setForm] = useState({ lat: null, long: null, description: null });
+console.log( {params})
+
+useEffect(()=>{
+
+
+fetch(`http://localhost:3001/markers/${params.id}`).then((res)=>{
+res.json().then((res)=>{
+console.log(res)
+setForm({lat:res.geoCode.lat, long:res.geoCode.lng, description:res.popUp})
+})
+}).catch((e)=>{
+console.log(e)
+})
+},[])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -39,42 +69,7 @@ export default function MarkersHeader({markers,setMarkers}:MarkersHeaderProps) {
       return; // Exit the function without updating the state
     }
 
-    console.log({form});
-if (form.lat !== null && form.long !== null) {
-
-const marker : Marker = {
-  id: form.lat + 1,
-  geoCode: {
-    lat: form.lat,
-    lng: form.long
-  },
-  popUp: form.description || ""
-}
-
-await useAddMarker(marker, setMarkers)
-//   const marker_value = {
-//     id: `${form.lat + 1}`,
-//     geoCode: { lat: form.lat, lng: form.long },
-//     popUp: form.description || "",
-//   }
-
-//  try {
-//           const result = await axios.post("http://localhost:3001/markers", marker_value);
-
-//           if (result.status === 201) {
-//             setMarkers((prevValue) => [
-//               ...prevValue,
-//              marker_value
-//             ]);
-//           }
-//         } catch (error) {
-//           console.log(error);
-//         }
-  }else{
-alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valores colocados"
-)
-}
-
+    await updateMarker()
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
@@ -90,7 +85,7 @@ alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valo
   return (
     <>
       <div className="border-red-400 border-4 ">
-        <h1 className=" text-2xl mb-[15px]">Novo Ponto</h1>
+        <h1 className=" text-2xl mb-[15px]">Editar Ponto</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
             <div className=" flex">

@@ -1,20 +1,40 @@
-// export async function fetchMarkers() {
-//   try {
-//     console.log("here");
-//     const res = await fetch("/api/markers");
+import { Marker } from "@/app/map/layout";
 
-//     console.log(res);
 
-//     console.log("here2");
+export async function fetchMarkers()  {
+  try {
+  
+    const res = await fetch("http://localhost:3001/markers");
 
-//     const markers = await res.json();
+    console.log(res);
 
-//     return markers;
-//   } catch (e) {
-//     if (e instanceof Error) {
-//       console.log(e.message);
+    
 
-//       return [];
-//     }
-//   }
-// }
+    const markers : Marker[] = await res.json();
+
+    return markers;
+  } catch (e) {
+    if (e instanceof Error) {
+      console.log(e.message);
+
+      return [];
+    }
+  }
+}
+
+
+//  fetch("http://localhost:3001/markers")
+//       .then((res) => {
+//         res
+//           .json()
+//           .then((res) => {
+           
+           
+//           })
+//           .catch((e) => {
+//             console.log("Error parsing request");
+//           });
+//       })
+//       .catch((e) => {
+//         console.log(e);
+//       });

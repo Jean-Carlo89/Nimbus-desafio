@@ -1,11 +1,19 @@
 "use client";
+import { Circle, Marker } from "@/app/map/layout";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import React, { useEffect, useState } from "react";
+import { useAddCircle } from "@/hooks/circles/useAddCircle";
+import { useAddMarker } from "@/hooks/markers/useAddMarker";
+import axios from "axios";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { CircleProps } from "../Map";
 
-export default function InitialPointsHeader() {
-  const { initialGeoCode, setInitialGeoCode } = useGlobalContext();
+type CirclesHeaderProps = {
+circles: Circle[],
+setCircles : Dispatch<SetStateAction<Circle[]>>;
+}
 
-  const [form, setForm] = useState({ lat: null, long: null, zoom: null });
+export default function Header({circles,setCircles}:CirclesHeaderProps) {
+  const [form, setForm] = useState({ lat: null, long: null, description: null, radius:null });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -14,9 +22,10 @@ export default function InitialPointsHeader() {
 
     const lat = parseFloat(form.lat);
     const long = parseFloat(form.long);
-    const zoom = parseInt(form.zoom);
+    const description = form.description;
+const radius = form.radius;
 
-    console.log({ lat, long, zoom });
+   
     const invalidValues = [];
 
     if (isNaN(lat)) {
@@ -27,26 +36,33 @@ export default function InitialPointsHeader() {
       invalidValues.push("Longitude");
     }
 
-    if (isNaN(zoom)) {
-      invalidValues.push("Zoom");
-    }
-
     if (invalidValues.length > 0) {
-      // Some input values are not valid numbers
+     
       alert(`Please enter valid numeric values for ${invalidValues.join(", ")}.`);
-      return; // Exit the function without updating the state
+      return; 
     }
 
-    try {
-      setInitialGeoCode({ lat: form.lat, long: form.long, zoom: form.zoom });
+    console.log({form});
+if (form.lat !== null && form.long !== null && form.radius !==null) {
 
-      localStorage.setItem("initialGeoCode", JSON.stringify({ lat, long, zoom }));
-    } catch (error) {
-      console.error(error);
-      console.log(error);
-      alert("Houve um erro ao setar as coordenadas iniciais");
-    } finally {
-    }
+ 
+
+console.log(e)
+const circle:CircleProps ={
+  center: [form.lat, form.long],
+  radius:form.radius,
+  description: "",
+  id: form.lat + 1,
+is_active:true
+
+}
+useAddCircle(circle, setCircles)
+
+  }else{
+alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique os valores colocados"
+)
+}
+
   }
 
   function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
@@ -62,9 +78,13 @@ export default function InitialPointsHeader() {
   return (
     <>
       <div className="border-red-400 border-4 ">
-        <h1 className=" text-2xl mb-[15px]">Ponto e Zoom Iniciais</h1>
+        <h1 className=" text-2xl mb-[15px]">Novo Perímetro</h1>
         <form onSubmit={handleSubmit}>
           <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
+            <div className=" flex">
+              <h2 className="pr-[15px]">Descrição:</h2>
+              <input onChange={onChange} value={form.description} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
+            </div>{" "}
             <div className=" flex">
               <h2 className="pr-[15px]">Latitude:</h2>
               <input onChange={onChange} value={form.lat} className="w-[100px] rounded border-black border-2" id="lat" placeholder={"latitude..."}></input>
@@ -73,9 +93,10 @@ export default function InitialPointsHeader() {
               <h2 className="pr-[15px]">Longitude:</h2>
               <input onChange={onChange} value={form.long} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
             </div>{" "}
-            <div className=" flex">
-              <h2 className="pr-[15px]">Zoom:</h2>
-              <input onChange={onChange} value={form.zoom} className="w-[100px] rounded border-black border-2" id="zoom" placeholder={"zoom..."}></input>
+
+ <div className=" flex">
+              <h2 className="pr-[15px]">Raio:</h2>
+              <input onChange={onChange} value={form.radius} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Raio..."}></input>
             </div>{" "}
             <button className=" bg-[#104E8B]  text-white rounded w-[60px] flex justify-center ml-5">Salvar</button>
           </div>
