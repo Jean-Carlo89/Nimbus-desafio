@@ -16,7 +16,7 @@ export default function PontosInicaisPage() {
     const long = parseFloat(form.long);
     const zoom = parseInt(form.zoom);
 
-    console.log({ lat, long, zoom });
+   
     const invalidValues = [];
 
     if (isNaN(lat)) {
@@ -32,9 +32,9 @@ export default function PontosInicaisPage() {
     }
 
     if (invalidValues.length > 0) {
-      // Some input values are not valid numbers
+     
       alert(`Please enter valid numeric values for ${invalidValues.join(", ")}.`);
-      return; // Exit the function without updating the state
+      return; 
     }
 
     try {

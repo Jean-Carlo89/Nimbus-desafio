@@ -46,29 +46,15 @@ export default function Map({ markers: mapData, setMarkers: setMapData, circles,
   const { initialGeoCode, setInitialGeoCode } = useGlobalContext();
  
 const onCreate = (e:any ) =>{
-console.log("create")
-console.log(e)
-var layer = e.layer;
 
-console.log("layer")
-console.log(e.layer)
 
-  
-    // if (e.layerType === 'rectangle') {
-    //      layer.setStyle({
-    //         color: 'blue',      // Cor da linha
-    //         weight: 4,          // Espessura da linha
-    //         dashArray: '10, 5', // Padrão da linha pontilhada
-    //         opacity: 1          // Opacidade da linha
-    //     });
-    // }
 
 
 
 
    if (e.layerType === 'circle') {
 
-console.log(e)
+
 const circle:CircleProps ={
   center: [e.layer._latlng.lat, e.layer._latlng.lng],
   radius: e.layer._mRadius,
@@ -81,15 +67,7 @@ useAddCircle(circle, setCircles)
 }
 }
 
-// const onEdit = (e: any) =>{
-// console.log("edit")
-// console.log(e)
-// }
 
-// const onDelete = (e: any) =>{
-// console.log("deletee")
-// console.log(e)
-// }
 
   const [mapZoom, setMapZoom] = useState(13);
   return (
@@ -139,9 +117,7 @@ return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOp
   function Markers() {
     const map = useMapEvents({
       async click(e) {
-        console.log(e);
-
-        console.log({ mapData: mapData });
+       
 
 const marker : appMarker = {
   id: e.latlng.lat + 1,
@@ -182,10 +158,7 @@ if(marker.is_active){
  function Rectangles() {
     const map = useMapEvents({
       async dragend(e) {
-console.log("Dragging")
-        console.log(e);
 
-        console.log({ mapData: mapData });
 
 
 
@@ -218,37 +191,16 @@ export const RecenterAutomatically = ({ lat, lng, zoom } : {lat:number, lng:numb
   const map = useMap();
 
   useEffect(() => {
-    // Check if any of the parameters is null
+  
     if (lat === null || lng === null || zoom === null) {
-      console.log("One or more parameters is null, using previous values");
-      return; // Do not update the map if any parameter is null
+     
+      return; 
     }
 
-    console.log("Recentering map to:", lat, lng, zoom);
+   
     map.setView([lat, lng], zoom);
   }, [lat, lng, zoom]);
 
   return null;
 };
 
-// const fake_markers = [
-//   {
-//     geoCode: { lat: -12.99314730803216, lng: -38.514737784862525 },
-//     popUp: "Test House1",
-//   },
-
-//   {
-//     geoCode: { lat: -12.991945078416206, lng: -38.51488262414933 },
-//     popUp: "Test H 2",
-//   },
-
-//   {
-//     geoCode: { lat: -12.992765731436737, lng: -38.51791352033615 },
-//     popUp: "Test Ho 3",
-//   },
-
-//   {
-//     geoCode: { lat: -12.993204805824472, lng: -38.51486116647721 },
-//     popUp: "Test Ho 4",
-//   },
-//];

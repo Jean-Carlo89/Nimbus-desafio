@@ -18,7 +18,7 @@ is_active: true
  try {
           const result = await axios.post("http://localhost:3001/markers", marker_value);
 
-console.log(result.data)
+
 
           if (result.status === 201) {
             setMarkers((prevValue) => [

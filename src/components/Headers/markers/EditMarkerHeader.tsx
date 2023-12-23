@@ -23,7 +23,7 @@ export default function MarkersHeader({markers,setMarkers,edit=false}:MarkersHea
     const long = parseFloat(form.long);
     const description = form.description;
 
-    console.log({ lat, long, description });
+   
     const invalidValues = [];
 
     if (isNaN(lat)) {
@@ -35,12 +35,12 @@ export default function MarkersHeader({markers,setMarkers,edit=false}:MarkersHea
     }
 
     if (invalidValues.length > 0) {
-      // Some input values are not valid numbers
+   
       alert(`Please enter valid numeric values for ${invalidValues.join(", ")}.`);
-      return; // Exit the function without updating the state
+      return; 
     }
 
-    console.log({form});
+  
 if (form.lat !== null && form.long !== null) {
 
 const marker : Marker = {
@@ -54,7 +54,7 @@ is_active:true
 }
 
 if(edit){
-console.log("Editing")
+
 }else{
 await useAddMarker(marker, setMarkers)
 }

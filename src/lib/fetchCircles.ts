@@ -7,7 +7,6 @@ export async function fetchCircles()  {
   
     const res = await fetch("http://localhost:3001/circles");
 
-    console.log(res);
 
     
 

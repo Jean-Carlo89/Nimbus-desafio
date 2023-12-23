@@ -1,11 +1,3 @@
-// import React from 'react'
-
-// export default function page() {
-//   return (
-//     <div>page</div>
-//   )
-// }
-
 
 "use client"
 import ReactSideBar from '@/components/Sidebar/ReactSidebar'
@@ -37,7 +29,7 @@ const [mapMarkers, setMapMarkers] = useState<Marker[]>([]);
 
 const [circles, setCircles] = useState<Circle[]>([]);
 
-// const [mapReactangle, setMapRectangle] = useState<Marker[]>([]);
+
 
 
   useEffect(() => {
