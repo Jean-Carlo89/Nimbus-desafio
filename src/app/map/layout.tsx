@@ -81,9 +81,7 @@ const updatedMapData = res.map(item => ({ ...item, is_active: true }));
         <div className="flex flex-col  border-pink-200 border-2 container h-[90vh] max-h-[2000px]  mt-5 rounded-[20px]  ">
           <div className="flex h-full justify-center w-full ">
             <div className=" w-[30%]  ">
-              <NextSideBar markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles} setActiveHeader={null as any}  setEdit={function (value: SetStateAction<boolean>): void {
-                throw new Error("Function not implemented.");
-              } }/>
+              <NextSideBar markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles} setActiveHeader={null as any}  />
             </div>
             <div className=" bg-[#F1F2F5]  flex  flex-col container border-red-400 border-4 h-[1000px] w-[1200px] mx-auto ">
 

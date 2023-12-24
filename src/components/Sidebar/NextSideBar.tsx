@@ -31,7 +31,7 @@ type BarProps = {
 };
 
 export type SideBarProps = {
-setEdit:Dispatch<SetStateAction<boolean>>;
+
   markers: Marker[];
   setMarkers: Dispatch<SetStateAction<Marker[]>>;
 circles: Circle[];
@@ -44,7 +44,7 @@ circles: Circle[];
 
 
 
-export default function SideBar({ setEdit,markers, setMarkers, setActiveHeader, circles,setCircles}: SideBarProps) {
+export default function SideBar({ markers, setMarkers, setActiveHeader, circles,setCircles}: SideBarProps) {
 
 async function deleteMarker(id:any){
 
@@ -78,7 +78,7 @@ const response = await axios.delete(`http://localhost:3001/circles/${id}`)
  if (response.status === 200) {
         const updatedMarkers = circles.filter(marker => marker.id !== id);
         setCircles(updatedMarkers);
-setEdit(false)
+
     }
 }
 

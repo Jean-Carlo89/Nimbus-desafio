@@ -8,7 +8,7 @@ import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "leaflet-defaulticon-compatibility";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import { Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
+import {  Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
 import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import "leaflet-draw/dist/leaflet.draw.css"
@@ -47,8 +47,7 @@ export default function Map({ markers: mapData, setMarkers: setMapData, circles,
  
 const onCreate = (e:any ) =>{
 
-
-
+console.log({e})
 
 
 
@@ -63,9 +62,20 @@ const circle:CircleProps ={
 is_active:true
 
 }
+ e.layer.setStyle({
+        //color: "red",
+fill:false,
+        stroke: false
+    });
+
+console.log(e)
+
 useAddCircle(circle, setCircles)
 }
 }
+
+
+
 
 
 
@@ -74,6 +84,34 @@ useAddCircle(circle, setCircles)
     <div className="container border-4 mx-auto">
       <div className="mx-auto ">
         <MapContainer center={[initialGeoCode?.lat, initialGeoCode?.long]} zoom={initialGeoCode?.zoom} scrollWheelZoom={true} >
+
+{/* <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
+			stroke:true,
+			color: 'black',
+			weight: 4,
+			opacity: 0.5,
+			fill: false,
+			fillColor: null, //same as color by default
+			fillOpacity: 0.2,
+			showArea: true,
+dashArray : '10, 5' ,
+			clickable: true
+		}}, polyline:false, circle:{shapeOptions: {
+			stroke:true,
+			color: 'black',
+			weight: 4,
+			opacity: 0.5,
+			fill: false,
+			fillColor: null, //same as color by default
+			fillOpacity: 0.2,
+			showArea: true,
+dashArray : '10, 5' ,
+			clickable: true
+		}},}
+
+
+
+} /> </FeatureGroup> */}
 
 <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
 			stroke:true,
@@ -86,7 +124,18 @@ useAddCircle(circle, setCircles)
 			showArea: true,
 dashArray : '10, 5' ,
 			clickable: true
-		}}, polyline:false, circle:true,}
+		}}, polyline:false, circle:{shapeOptions: {
+			stroke:true,
+			color: 'black',
+// 			weight: 4,
+// 			opacity: 0.5,
+// 			fill: false,
+// 			fillColor: null, //same as color by default
+// 			fillOpacity: 0.2,
+// 			showArea: true,
+// dashArray : '10, 5' ,
+// 			clickable: true
+		}},}
 
 
 
@@ -102,6 +151,14 @@ dashArray : '10, 5' ,
     </div>
   );
 function Circles(){
+
+// const circle: appCircle = {
+//   id:
+//   center: [],
+//   radius: 0,
+//   description: "",
+//   is_active: false
+// }
 
 
 
