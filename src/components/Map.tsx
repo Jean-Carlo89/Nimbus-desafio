@@ -14,6 +14,8 @@ import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import "leaflet-draw/dist/leaflet.draw.css"
 import {EditControl} from "react-leaflet-draw"
 import { useAddCircle } from "@/hooks/circles/useAddCircle";
+import { generateMarker } from "@/helpers/generateMarkers";
+import { generateCircle as generateCircle } from "@/helpers/generateCircle";
 
 type MapProps = {
   markers: appMarker[];
@@ -54,14 +56,17 @@ console.log({e})
    if (e.layerType === 'circle') {
 
 
-const circle:CircleProps ={
+const initial_circle:CircleProps ={
   center: [e.layer._latlng.lat, e.layer._latlng.lng],
   radius: e.layer._mRadius,
   description: "",
   id: e.layer._latlng.lat + 1,
 is_active:true
 
+
 }
+const circle = generateCircle(initial_circle)
+
  e.layer.setStyle({
         //color: "red",
 fill:false,
@@ -140,7 +145,7 @@ return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOp
       async click(e) {
        
 
-const marker : appMarker = {
+const initial_marker : appMarker = {
   id: e.latlng.lat + 1,
   geoCode: {
     lat: e.latlng.lat,
@@ -150,6 +155,7 @@ const marker : appMarker = {
   is_active: true
 }
 
+const marker = generateMarker(initial_marker)
 await useAddMarker(marker, setMapData)
 
         
@@ -176,36 +182,7 @@ if(marker.is_active){
     );
   }
 
-//  function Rectangles() {
-//     const map = useMapEvents({
-//       async dragend(e) {
 
-
-
-
-        
-//       },
-//     });
-
-//     return (
-//       <>
-//         {mapData.map((marker, i) => {
-
-// if(marker.is_active){
-//   return (
-//             <div key={i}>
-//               <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
-//                 <Popup>{marker.popUp || "No description"}</Popup>
-//               </Marker>{" "}
-//             </div>
-//           );
-// }
-        
-//         })}
-        
-//       </>
-//     );
-//   }
 }
 
 export const RecenterAutomatically = ({ lat, lng, zoom } : {lat:number, lng:number, zoom:number}) => {

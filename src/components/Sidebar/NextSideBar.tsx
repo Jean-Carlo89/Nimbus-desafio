@@ -25,6 +25,7 @@ import MenuLink from "../MenuLink";
 import {Circle, Marker } from "@/app/map/layout";
 import { sensitiveHeaders } from "http2";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type BarProps = {
   children: React.ReactNode;
@@ -46,6 +47,8 @@ circles: Circle[];
 
 export default function SideBar({ markers, setMarkers, setActiveHeader, circles,setCircles}: SideBarProps) {
 
+const router = useRouter()
+
 async function deleteMarker(id:any){
 
 const response = await axios.delete(`http://localhost:3001/markers/${id}`)
@@ -53,6 +56,7 @@ const response = await axios.delete(`http://localhost:3001/markers/${id}`)
  if (response.status === 200) {
         const updatedMarkers = markers.filter(marker => marker.id !== id);
         setMarkers(updatedMarkers);
+router.push("/map/pontos")
     }
 }
 
@@ -78,8 +82,13 @@ const response = await axios.delete(`http://localhost:3001/circles/${id}`)
  if (response.status === 200) {
         const updatedMarkers = circles.filter(marker => marker.id !== id);
         setCircles(updatedMarkers);
+router.push("/map/perimetros")
 
     }
+
+
+
+
 }
 
 
@@ -136,7 +145,9 @@ const response = await axios.delete(`http://localhost:3001/circles/${id}`)
                   <div onClick={()=> toggleCircle(circle.id)} key={circle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${circle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                     <li>{"Perímetro " + (i + 1)}</li>
 
-<div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div>
+<div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/perimetros/${circle.id}`} > <FaRegEdit /></Link>
+
+<div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div></div>
                    
                   </div>
                 );

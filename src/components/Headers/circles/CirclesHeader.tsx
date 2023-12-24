@@ -6,6 +6,7 @@ import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CircleProps } from "../../Map";
+import { generateCircle } from "@/helpers/generateCircle";
 
 type CirclesHeaderProps = {
 circles: Circle[],
@@ -51,7 +52,7 @@ if (form?.lat !== null && form?.long !== null && form?.radius !==null) {
  
 
 
-const circle:CircleProps ={
+const initial_circle:CircleProps ={
   center: [form?.lat, form?.long],
   radius:form?.radius,
   description: form?.description,
@@ -59,6 +60,9 @@ const circle:CircleProps ={
 is_active:true
 
 }
+
+const circle = generateCircle(initial_circle)
+
 useAddCircle(circle, setCircles)
 
   }else{
@@ -108,3 +112,5 @@ alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique o
     </>
   );
 }
+
+

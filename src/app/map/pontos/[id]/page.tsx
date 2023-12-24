@@ -10,36 +10,7 @@ import { useMarkersContext } from "@/context/areas";
 export default function PontoPage({ params }: { params: { id: string } }) {
 
 
-const markers2 = [
-    {
-      "id": "-11.894477216124459",
-      "geoCode": {
-        "lat": -12.98766404830767,
-        "lng": -38.507573504498964
-      },
-      "popUp": "jjjjj",
-      "is_active": true
-    },
-    {
-      "id": "-11.929614580987227",
-      "geoCode": {
-        "lat": -12.929614580987227,
-        "lng": -38.50122427410508
-      },
-      "popUp": "gggg",
-      "is_active": true
-    },
-    {
-      "id": "-11.991176693830331",
-      "geoCode": {
-        "lat": -12.991176693830331,
-        "lng": -38.494960844121934
-      },
-      "popUp": "",
-      "is_active": true
-    }
-  ]
- 
+
 
 
 const {markers, setMarkers} = useMarkersContext()
@@ -81,6 +52,11 @@ const body : Marker = {
 try {
   const response = await axios.put(`http://localhost:3001/markers/${params.id}`,body)
 
+setMarkers(prevMarkers => {
+      return prevMarkers.map(marker => 
+        marker.id === params.id ? { ...marker, ...body } : marker
+      );
+    });
 
 } catch (error) {
   console.log(error)

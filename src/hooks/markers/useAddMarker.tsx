@@ -8,7 +8,7 @@ export async function useAddMarker(props:Marker, setMarkers:  Dispatch<SetStateA
 
 
  const marker_value : Marker = {
-    id: `${props.geoCode.lat + 1}`,
+    id: props.id,
     geoCode: { lat: props.geoCode.lat, lng: props.geoCode.lng },
     popUp: props.popUp || "",
 is_active: true

@@ -6,6 +6,8 @@ import { useCirclesContext } from '@/context/areas';
 
 export default function PerimetrosPage() {
 
+
+
   const {circles,setCircles} = useCirclesContext()
  
   return (
