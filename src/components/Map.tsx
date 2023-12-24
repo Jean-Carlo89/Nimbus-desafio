@@ -104,8 +104,13 @@ dashArray : '10, 5' ,
 function Circles(){
 
 
+
 return circles.map((circle)=>{
+
+if(circle.is_active){
 return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
+}
+
 })
 
 
@@ -155,36 +160,36 @@ if(marker.is_active){
     );
   }
 
- function Rectangles() {
-    const map = useMapEvents({
-      async dragend(e) {
+//  function Rectangles() {
+//     const map = useMapEvents({
+//       async dragend(e) {
 
 
 
 
         
-      },
-    });
+//       },
+//     });
 
-    return (
-      <>
-        {mapData.map((marker, i) => {
+//     return (
+//       <>
+//         {mapData.map((marker, i) => {
 
-if(marker.is_active){
-  return (
-            <div key={i}>
-              <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
-                <Popup>{marker.popUp || "No description"}</Popup>
-              </Marker>{" "}
-            </div>
-          );
-}
+// if(marker.is_active){
+//   return (
+//             <div key={i}>
+//               <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
+//                 <Popup>{marker.popUp || "No description"}</Popup>
+//               </Marker>{" "}
+//             </div>
+//           );
+// }
         
-        })}
+//         })}
         
-      </>
-    );
-  }
+//       </>
+//     );
+//   }
 }
 
 export const RecenterAutomatically = ({ lat, lng, zoom } : {lat:number, lng:number, zoom:number}) => {

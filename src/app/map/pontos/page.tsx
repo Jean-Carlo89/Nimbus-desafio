@@ -39,19 +39,19 @@ const {markers, setMarkers} = useMarkersContext()
    
   }
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-    setForm((prev) => {
-      let helper = { ...prev };
+  // function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
+  //   setForm((prev) => {
+  //     let helper = { ...prev };
 
-      helper[`${e.target.id}`] = e.target.value;
+  //     helper[`${e.target.id}`] = e.target.value;
 
-      return helper;
-    });
-  }
+  //     return helper;
+  //   });
+  // }
 
   return (
 
-<MarkersHeader markers={markers} setMarkers={setMarkers} edit={false}/>
+<MarkersHeader  form={form} setMarkers={setMarkers} setForm={setForm} edit={false}/>
    
   );
 }

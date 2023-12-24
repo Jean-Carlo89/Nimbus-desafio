@@ -123,9 +123,9 @@ setEdit(false)
 //*************** */
           <div className="pb-[50px]  border-yellow-400 border-2 w-[80%] mt-[20px]">
           <div className=" mx-auto pb-[10px] border-yellow-400 border-2 w-[80%] mt-[20px] z-10" >
-            <div className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer" onClick={()=>setActiveHeader("Circles")} >
+            <MenuLink href="/map/perimetros" className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer"  >
               Perímetros <span className="ml-[10px]">+</span>
-            </div>
+            </MenuLink>
           </div>
 
           <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">

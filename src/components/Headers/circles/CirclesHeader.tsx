@@ -12,7 +12,7 @@ circles: Circle[],
 setCircles : Dispatch<SetStateAction<Circle[]>>;
 }
 
-export default function Header({circles,setCircles}:CirclesHeaderProps) {
+export default function CirclesHeader({circles,setCircles}:CirclesHeaderProps) {
   const [form, setForm] = useState({ lat: null, long: null, description: null, radius:null });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -23,13 +23,16 @@ export default function Header({circles,setCircles}:CirclesHeaderProps) {
     const lat = parseFloat(form.lat);
     const long = parseFloat(form.long);
     const description = form.description;
-const radius = form.radius;
+const radius = parseFloat(form.radius)
 
    
     const invalidValues = [];
 
     if (isNaN(lat)) {
       invalidValues.push("Latitude");
+    }
+ if (isNaN(radius)) {
+      invalidValues.push("Raio");
     }
 
     if (isNaN(long)) {
@@ -83,20 +86,20 @@ alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique o
           <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
             <div className=" flex">
               <h2 className="pr-[15px]">Descrição:</h2>
-              <input onChange={onChange} value={form.description} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
+              <input onChange={onChange} value={form?.description} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
             </div>{" "}
             <div className=" flex">
               <h2 className="pr-[15px]">Latitude:</h2>
-              <input onChange={onChange} value={form.lat} className="w-[100px] rounded border-black border-2" id="lat" placeholder={"latitude..."}></input>
+              <input onChange={onChange} value={form?.lat} className="w-[100px] rounded border-black border-2" id="lat" placeholder={"latitude..."}></input>
             </div>
             <div className=" flex">
               <h2 className="pr-[15px]">Longitude:</h2>
-              <input onChange={onChange} value={form.long} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
+              <input onChange={onChange} value={form?.long} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
             </div>{" "}
 
  <div className=" flex">
               <h2 className="pr-[15px]">Raio:</h2>
-              <input onChange={onChange} value={form.radius} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Raio..."}></input>
+              <input onChange={onChange} value={form?.radius} className="w-[100px] rounded border-black border-2" id="radius" placeholder={"Raio..."}></input>
             </div>{" "}
             <button className=" bg-[#104E8B]  text-white rounded w-[60px] flex justify-center ml-5">Salvar</button>
           </div>
