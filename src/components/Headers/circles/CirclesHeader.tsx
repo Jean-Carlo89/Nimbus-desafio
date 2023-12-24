@@ -13,17 +13,17 @@ setCircles : Dispatch<SetStateAction<Circle[]>>;
 }
 
 export default function CirclesHeader({circles,setCircles}:CirclesHeaderProps) {
-  const [form, setForm] = useState({ lat: null, long: null, description: null, radius:null });
+  const [form, setForm] = useState({ lat: null, long: null, description: "", radius:null });
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     //*** form is transforming to string */
 
-    const lat = parseFloat(form.lat);
-    const long = parseFloat(form.long);
-    const description = form.description;
-const radius = parseFloat(form.radius)
+    const lat = parseFloat(form?.lat);
+    const long = parseFloat(form?.long);
+    const description = form?.description;
+const radius = parseFloat(form?.radius)
 
    
     const invalidValues = [];
@@ -46,16 +46,16 @@ const radius = parseFloat(form.radius)
     }
 
   
-if (form.lat !== null && form.long !== null && form.radius !==null) {
+if (form?.lat !== null && form?.long !== null && form?.radius !==null) {
 
  
 
-console.log(e)
+
 const circle:CircleProps ={
-  center: [form.lat, form.long],
-  radius:form.radius,
-  description: "",
-  id: form.lat + 1,
+  center: [form?.lat, form?.long],
+  radius:form?.radius,
+  description: form?.description,
+  id: form?.lat + 1,
 is_active:true
 
 }

@@ -85,33 +85,7 @@ useAddCircle(circle, setCircles)
       <div className="mx-auto ">
         <MapContainer center={[initialGeoCode?.lat, initialGeoCode?.long]} zoom={initialGeoCode?.zoom} scrollWheelZoom={true} >
 
-{/* <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
-			stroke:true,
-			color: 'black',
-			weight: 4,
-			opacity: 0.5,
-			fill: false,
-			fillColor: null, //same as color by default
-			fillOpacity: 0.2,
-			showArea: true,
-dashArray : '10, 5' ,
-			clickable: true
-		}}, polyline:false, circle:{shapeOptions: {
-			stroke:true,
-			color: 'black',
-			weight: 4,
-			opacity: 0.5,
-			fill: false,
-			fillColor: null, //same as color by default
-			fillOpacity: 0.2,
-			showArea: true,
-dashArray : '10, 5' ,
-			clickable: true
-		}},}
 
-
-
-} /> </FeatureGroup> */}
 
 <FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
 			stroke:true,
@@ -127,14 +101,7 @@ dashArray : '10, 5' ,
 		}}, polyline:false, circle:{shapeOptions: {
 			stroke:true,
 			color: 'black',
-// 			weight: 4,
-// 			opacity: 0.5,
-// 			fill: false,
-// 			fillColor: null, //same as color by default
-// 			fillOpacity: 0.2,
-// 			showArea: true,
-// dashArray : '10, 5' ,
-// 			clickable: true
+
 		}},}
 
 
@@ -151,14 +118,6 @@ dashArray : '10, 5' ,
     </div>
   );
 function Circles(){
-
-// const circle: appCircle = {
-//   id:
-//   center: [],
-//   radius: 0,
-//   description: "",
-//   is_active: false
-// }
 
 
 
