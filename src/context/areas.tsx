@@ -8,11 +8,18 @@ import { geoCode } from "./initialGeoCode";
 
 const MarkersContext = createContext<MarkerContextProps>({markers:[], setMarkers: ()=>  []});
 const CirclesContext = createContext<CirclesContextProps>({circles:[], setCircles: ()=>  []});
+const RectanglesContext = createContext<CirclesContextProps>({circles:[], setCircles: ()=>  []});
 
 interface MarkerContextProps {
  markers: Marker[],
   setMarkers: Dispatch<SetStateAction<Marker[]>>;
 }
+
+// interface MarkerContextProps {
+// rectangle:Rectangle[],
+//   setMarkers: Dispatch<SetStateAction<Marker[]>>;
+// }
+
 
 interface CirclesContextProps {
   circles: Circle[],

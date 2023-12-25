@@ -1,6 +1,6 @@
 "use client";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import L from "leaflet";
+import L, { featureGroup } from "leaflet";
 import { MapContainer, TileLayer, Marker, Popup, Rectangle, useMapEvents, useMap, FeatureGroup, Circle } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { Icon } from "leaflet";
@@ -77,6 +77,15 @@ console.log(e)
 
 useAddCircle(circle, setCircles)
 }
+
+   if (e.layerType === 'rectangle') {
+
+console.log(e)
+
+console.log(e.layer._latlngs)
+
+console.log("retangulo")
+}
 }
 
 
@@ -84,7 +93,7 @@ useAddCircle(circle, setCircles)
 
 
 
-  const [mapZoom, setMapZoom] = useState(13);
+ 
   return (
     <div className="container border-4 mx-auto">
       <div className="mx-auto ">
@@ -92,10 +101,21 @@ useAddCircle(circle, setCircles)
 
 
 
-<FeatureGroup> <EditControl position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={{rectangle:{shapeOptions: {
+<FeatureGroup > <EditControl edit={{
+    remove: false,
+    edit: false
+  }} position="topright" onCreated={(e)=>onCreate(e)} onEdited={(e)=>onEdit(e) } onDeleted={(e)=>onDelete(e)} draw={  
+
+
+
+
+{
+
+
+rectangle:{shapeOptions: {
 			stroke:true,
 			color: 'black',
-			weight: 4,
+			weight: 4, 
 			opacity: 0.5,
 			fill: false,
 			fillColor: null, //same as color by default
@@ -103,7 +123,7 @@ useAddCircle(circle, setCircles)
 			showArea: true,
 dashArray : '10, 5' ,
 			clickable: true
-		}}, polyline:false, circle:{shapeOptions: {
+		}} ,marker: false,polygon:false, circlemarker:false,polyline:false, circle:{shapeOptions: {
 			stroke:true,
 			color: 'black',
 
@@ -115,6 +135,7 @@ dashArray : '10, 5' ,
           <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <Markers />
 <Circles/>
+<Rectangles/>
 {/* <Rectangles/> */}
 
           <RecenterAutomatically lat={initialGeoCode?.lat} lng={initialGeoCode?.long} zoom={initialGeoCode?.zoom} />
@@ -131,6 +152,50 @@ return circles.map((circle)=>{
 if(circle.is_active){
 return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
 }
+
+})
+
+
+
+}
+
+
+
+function Rectangles(){
+
+const rec = [
+    {
+        "lat": -12.934299189523362,
+        "lng": -38.484064191959476
+    },
+    {
+        "lat": -12.922420189532598,
+        "lng": -38.484064191959476
+    },
+    {
+        "lat": -12.922420189532598,
+        "lng": -38.46604610570656
+    },
+    {
+        "lat": -12.934299189523362,
+        "lng": -38.46604610570656
+    }
+]
+
+// rec[0].lat = ltitue superior,
+// rec[2].lat = latitude inferior
+//rec[0].lng = longitude esquerda
+//rec[2].lng = longitude direita
+  const bounds: [number, number][] = [
+    [rec[0].lat, rec[0].lng],
+    [rec[2].lat, rec[2].lng]
+  ];
+
+return rec.map((circle)=>{
+return <Rectangle  bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
+//  if(circle.is_active){
+
+//  }
 
 })
 

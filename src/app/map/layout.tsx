@@ -32,6 +32,15 @@ description:string
 is_active: boolean
 };
 
+export type Rectangle = {
+id:any,
+bounds : [number,number],
+radius:number
+description:string
+is_active: boolean
+};
+
+
 
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
