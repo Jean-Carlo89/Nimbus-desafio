@@ -1,25 +1,5 @@
 {
   "markers": [],
-  "circles": [
-    {
-      "center": [
-        "-12.98766404830767",
-        "-38.48374576958754"
-      ],
-      "radius": "4000",
-      "description": "menor",
-      "id": "c1631d7f-028c-4852-a1fa-11e83a7de66d",
-      "is_active": true
-    },
-    {
-      "center": [
-        -12.960732116760264,
-        -38.53559942032875
-      ],
-      "radius": 3281.9060103625316,
-      "description": "",
-      "id": "6b8a0669-1fe5-413f-8c81-f80fe91060b9",
-      "is_active": true
-    }
-  ]
+  "circles": [],
+  "rectangles": []
 }

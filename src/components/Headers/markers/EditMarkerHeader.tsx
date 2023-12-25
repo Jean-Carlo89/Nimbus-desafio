@@ -86,15 +86,15 @@ alert("Latitude ou Longitude recebram valores nulos. Por favor verifique os valo
           <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
             <div className=" flex">
               <h2 className="pr-[15px]">Descrição:</h2>
-              <input onChange={onChange} value={form.description} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
+              <input onChange={onChange} value={form.description || ""} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
             </div>{" "}
             <div className=" flex">
               <h2 className="pr-[15px]">Latitude:</h2>
-              <input onChange={onChange} value={form.lat} className="w-[100px] rounded border-black border-2" id="lat" placeholder={"latitude..."}></input>
+              <input onChange={onChange} value={form.lat || ""} className="w-[100px] rounded border-black border-2" id="lat" placeholder={"latitude..."}></input>
             </div>
             <div className=" flex">
               <h2 className="pr-[15px]">Longitude:</h2>
-              <input onChange={onChange} value={form.long} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
+              <input onChange={onChange} value={form.long || ""} className="w-[100px] rounded border-black border-2" id="long" placeholder={"Longitude..."}></input>
             </div>{" "}
             <button className=" bg-[#104E8B]  text-white rounded w-[60px] flex justify-center ml-5">Salvar</button>
           </div>

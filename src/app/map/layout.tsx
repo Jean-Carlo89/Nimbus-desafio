@@ -8,9 +8,10 @@ import InitialPointsHeader from "@/components/Headers/InitialPointHeader";
 import MarkersHeader from "@/components/Headers/markers/MarkersHeader";
 import { fetchCircles } from "@/lib/fetchCircles";
 import { fetchMarkers } from "@/lib/fetchMarkers";
-import { DataContextProvider, useCirclesContext, useMarkersContext } from "@/context/areas";
+import { DataContextProvider, useCirclesContext, useMarkersContext, useRectanglesContext } from "@/context/areas";
+import { fetchRectangles } from "@/lib/fetchRectangles";
 
-type DashboardLayoutProps = {
+type MapLayoutProps = {
   children: React.ReactNode;
 };
 
@@ -34,8 +35,7 @@ is_active: boolean
 
 export type Rectangle = {
 id:any,
-bounds : [number,number],
-radius:number
+bounds : {lat :{sup:number, inf:number}, lng : {left:number, right:number}} 
 description:string
 is_active: boolean
 };
@@ -43,14 +43,13 @@ is_active: boolean
 
 
 
-export default function DashboardLayout({ children }: DashboardLayoutProps) {
+export default function MapLayout({ children }: MapLayoutProps) {
 
 
 const headerComponents = {
   InitialPoints: InitialPointsHeader,
   Markers: MarkersHeader,
-Circles: CirclesHeader
- 
+  Circles: CirclesHeader
 };
 
 
@@ -59,28 +58,35 @@ const {markers, setMarkers} = useMarkersContext()
 
 const {circles, setCircles} = useCirclesContext()
 
+const {rectangles, setRectangles}  = useRectanglesContext()
+
   useEffect(() => {
 
 
 
 fetchMarkers().then((res)=>{
 
-const updatedMapData = res.map(item => ({ ...item, is_active: true }));
-  setMarkers(updatedMapData);
+  const updatedMapData = res.map(item => ({ ...item, is_active: true }));
+    setMarkers(updatedMapData);
 
 
-})
+  })
 
-fetchCircles().then((res)=>{
-const updatedMapData = res.map(item => ({ ...item, is_active: true }));
-  setCircles(updatedMapData);
+  fetchCircles().then((res)=>{
+  const updatedMapData = res.map(item => ({ ...item, is_active: true }));
+    setCircles(updatedMapData);
 
 
-})
+  })
+
+  fetchRectangles().then((res)=>{
+  const updatedMapData = res.map(item => ({ ...item, is_active: true }));
+    setRectangles(updatedMapData);
+
+
+  })
   
-  
-
-   }, []);
+ }, []);
 
 
 
@@ -90,13 +96,13 @@ const updatedMapData = res.map(item => ({ ...item, is_active: true }));
         <div className="flex flex-col  border-pink-200 border-2 container h-[90vh] max-h-[2000px]  mt-5 rounded-[20px]  ">
           <div className="flex h-full justify-center w-full ">
             <div className=" w-[30%]  ">
-              <NextSideBar markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles} setActiveHeader={null as any}  />
+              <NextSideBar markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles} rectangles={rectangles}   setRectangles={setRectangles}  />
             </div>
             <div className=" bg-[#F1F2F5]  flex  flex-col container border-red-400 border-4 h-[1000px] w-[1200px] mx-auto ">
 
- {children}
+                {children}
              
-              <Map  markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles}/>
+              <Map  markers={markers} setMarkers={setMarkers} circles={circles} setCircles={setCircles} rectangles={rectangles} setRectangles={setRectangles}/>
             </div>
           </div>
         </div>

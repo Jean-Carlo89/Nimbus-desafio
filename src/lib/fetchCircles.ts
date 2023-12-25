@@ -10,9 +10,9 @@ export async function fetchCircles()  {
 
     
 
-    const markers : Circle[] = await res.json();
+    const circles : Circle[] = await res.json();
 
-    return markers;
+     return circles?.length ? circles : []
   } catch (e) {
     if (e instanceof Error) {
       console.log(e.message);

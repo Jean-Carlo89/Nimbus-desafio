@@ -11,7 +11,7 @@ export async function fetchMarkers()  {
 
     const markers : Marker[] = await res.json();
 
-    return markers;
+     return markers?.length ? markers : []
   } catch (e) {
     if (e instanceof Error) {
       console.log(e.message);

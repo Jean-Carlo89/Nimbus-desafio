@@ -8,7 +8,7 @@ import MarkerIcon from "../../node_modules/leaflet/dist/images/marker-icon.png";
 import "leaflet-defaulticon-compatibility";
 import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.png";
 import { useGlobalContext } from "@/context/initialGeoCode";
-import {  Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
+import {  Rectangle as appRectangle, Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
 import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import "leaflet-draw/dist/leaflet.draw.css"
@@ -16,12 +16,16 @@ import {EditControl} from "react-leaflet-draw"
 import { useAddCircle } from "@/hooks/circles/useAddCircle";
 import { generateMarker } from "@/helpers/generateMarkers";
 import { generateCircle as generateCircle } from "@/helpers/generateCircle";
+import { useAddRectangle } from "@/hooks/rectangles/useAddRectangles";
+import { generateRectangle } from "@/helpers/generateRectangle";
 
 type MapProps = {
   markers: appMarker[];
   setMarkers: Dispatch<SetStateAction<appMarker[]>>;
- circles: appCircle[];
+  circles: appCircle[];
   setCircles: Dispatch<SetStateAction<appCircle[]>>;
+  rectangles: appRectangle[]
+  setRectangles: Dispatch<SetStateAction<appRectangle[]>>;
 };
 
 
@@ -33,7 +37,16 @@ description:string
 is_active:boolean
 }
 
-export default function Map({ markers: mapData, setMarkers: setMapData, circles, setCircles }: MapProps) {
+
+
+export type RectanglesProps = {
+id:any,
+bounds : {lat :{sup:number, inf:number}, lng : {left:number, right:number}} 
+description:string
+is_active: boolean
+}
+
+export default function Map({ markers: mapData, setMarkers: setMapData, circles, setCircles , rectangles,setRectangles }: MapProps) {
   
 
   useEffect(() => {
@@ -49,7 +62,7 @@ export default function Map({ markers: mapData, setMarkers: setMapData, circles,
  
 const onCreate = (e:any ) =>{
 
-console.log({e})
+
 
 
 
@@ -73,19 +86,59 @@ fill:false,
         stroke: false
     });
 
-console.log(e)
+
 
 useAddCircle(circle, setCircles)
 }
 
-   if (e.layerType === 'rectangle') {
+  
+ if (e.layerType === 'rectangle') {
 
-console.log(e)
 
-console.log(e.layer._latlngs)
+  
 
-console.log("retangulo")
+ e.layer.setStyle({
+        //color: "red",
+fill:false,
+        stroke: false
+    });
+
+
+    const createdLatLngs = e.layer._latlngs
+
+
+
+
+// createdLatLngs[0][0].lat = latitude superior,
+// createdLatLngs[0][2].lat = latitude inferior
+//createdLatLngs[0][0].lng = longitude esquerda
+//createdLatLngs[0][2].lng = longitude direita
+
+const initial_rectangle:RectanglesProps ={
+  id: "",
+  bounds: {
+    lat: {
+      sup: createdLatLngs[0][0].lat,
+      inf: createdLatLngs[0][2].lat
+    },
+    lng: {
+      left: createdLatLngs[0][0].lng,
+      right: createdLatLngs[0][2].lng,
+    }
+  },
+  description: "",
+  is_active: true
 }
+
+
+   
+
+ const rectangle = generateRectangle(initial_rectangle)
+
+
+
+  useAddRectangle(rectangle,setRectangles) 
+  }
 }
 
 
@@ -133,11 +186,9 @@ dashArray : '10, 5' ,
 
 } /> </FeatureGroup>
           <TileLayer attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors' url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          <Markers />
-<Circles/>
-<Rectangles/>
-{/* <Rectangles/> */}
-
+            <Markers />
+            <Circles/>
+            <Rectangles/>
           <RecenterAutomatically lat={initialGeoCode?.lat} lng={initialGeoCode?.long} zoom={initialGeoCode?.zoom} />
         </MapContainer>
       </div>
@@ -147,15 +198,13 @@ function Circles(){
 
 
 
-return circles.map((circle)=>{
+return circles.map((circle,index)=>{
 
-if(circle.is_active){
-return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
-}
+  if(circle.is_active){
+    return <Circle key={circle.id || index } center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
+  }
 
 })
-
-
 
 }
 
@@ -163,39 +212,32 @@ return <Circle  center={circle.center} radius={circle.radius} opacity={1} fillOp
 
 function Rectangles(){
 
-const rec = [
-    {
-        "lat": -12.934299189523362,
-        "lng": -38.484064191959476
-    },
-    {
-        "lat": -12.922420189532598,
-        "lng": -38.484064191959476
-    },
-    {
-        "lat": -12.922420189532598,
-        "lng": -38.46604610570656
-    },
-    {
-        "lat": -12.934299189523362,
-        "lng": -38.46604610570656
-    }
-]
+
+
+
+
+
+return rectangles.map((rectangle,index)=>{
 
 // rec[0].lat = ltitue superior,
 // rec[2].lat = latitude inferior
 //rec[0].lng = longitude esquerda
 //rec[2].lng = longitude direita
+
   const bounds: [number, number][] = [
-    [rec[0].lat, rec[0].lng],
-    [rec[2].lat, rec[2].lng]
-  ];
+    // [rec[0].lat, rec[0].lng],
+    // [rec[2].lat, rec[2].lng]
 
-return rec.map((circle)=>{
-return <Rectangle  bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
-//  if(circle.is_active){
+ [rectangle.bounds.lat.sup, rectangle.bounds.lng.left],
+    [rectangle.bounds.lat.inf, rectangle.bounds.lng.right ]
+  
+  ]
 
-//  }
+  if(rectangle.is_active){
+    return <Rectangle key={rectangle.id || index } bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
+    }
+
+
 
 })
 

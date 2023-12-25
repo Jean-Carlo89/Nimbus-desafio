@@ -22,10 +22,11 @@ import { styled } from "styled-components";
 import { FaRegEdit } from "react-icons/fa";
 import { FaRegTrashAlt } from "react-icons/fa";
 import MenuLink from "../MenuLink";
-import {Circle, Marker } from "@/app/map/layout";
+import {Circle, Marker, Rectangle } from "@/app/map/layout";
 import { sensitiveHeaders } from "http2";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { rectangle } from "leaflet";
 
 type BarProps = {
   children: React.ReactNode;
@@ -35,9 +36,11 @@ export type SideBarProps = {
 
   markers: Marker[];
   setMarkers: Dispatch<SetStateAction<Marker[]>>;
-circles: Circle[];
+  circles: Circle[];
   setCircles: Dispatch<SetStateAction<Circle[]>>;
- setActiveHeader: Dispatch<SetStateAction<string>>;
+  rectangles: Rectangle[]
+  setRectangles: Dispatch<SetStateAction<Rectangle[]>>;
+
 };
 
 
@@ -45,7 +48,7 @@ circles: Circle[];
 
 
 
-export default function SideBar({ markers, setMarkers, setActiveHeader, circles,setCircles}: SideBarProps) {
+export default function SideBar({ markers, setMarkers,  circles,setCircles , rectangles, setRectangles}: SideBarProps) {
 
 const router = useRouter()
 
@@ -75,6 +78,12 @@ function toggleCircle(id:any) {
   ));
 }
 
+function toggleRectangle(id:any) {
+  setRectangles(prevMarkers => prevMarkers.map(circle => 
+    circle.id === id ? { ...circle, is_active: !circle.is_active } : circle
+  ));
+}
+
 async function deleteCircle(id:any){
 
 const response = await axios.delete(`http://localhost:3001/circles/${id}`)
@@ -90,6 +99,22 @@ router.push("/map/perimetros")
 
 
 }
+
+async function deleteRectangle(id:any){
+
+const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
+
+  if (response.status === 200) {
+      const updatedMarkers = rectangles.filter(marker => marker.id !== id);
+      setRectangles(updatedMarkers);
+      router.push("/map/areas")
+ }
+
+
+
+
+}
+
 
 
 
@@ -145,9 +170,38 @@ router.push("/map/perimetros")
                   <div onClick={()=> toggleCircle(circle.id)} key={circle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${circle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                     <li>{"Perímetro " + (i + 1)}</li>
 
-<div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/perimetros/${circle.id}`} > <FaRegEdit /></Link>
+                    <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/perimetros/${circle.id}`} > <FaRegEdit /></Link>
 
-<div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div></div>
+                    <div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div></div>
+                   
+                  </div>
+                );
+              })}
+            </ul>
+          </div>
+        </div>
+
+
+//****************** */
+
+   <div className="pb-[50px]  border-yellow-400 border-2 w-[80%] mt-[20px]">
+          <div className=" mx-auto pb-[10px] border-yellow-400 border-2 w-[80%] mt-[20px] z-10" >
+            <MenuLink href="/map/areas" className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer"  >
+              Áreas <span className="ml-[10px]">+</span>
+            </MenuLink>
+          </div>
+
+          <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
+            
+            <ul className="flex flex-col justify-center  w-full   border-green-500 border-4">
+              {rectangles?.map((rectangle, i) => {
+                return (
+                  <div onClick={()=> toggleRectangle(rectangle.id)} key={rectangle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${rectangle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
+                    <li>{"Perímetro " + (i + 1)}</li>
+
+                      <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/areass/${rectangle.id}`} > <FaRegEdit /></Link>
+
+                      <div className=" z-20 cursor-pointer" onClick={()=>deleteRectangle(rectangle.id)}> <FaRegTrashAlt  /></div></div>
                    
                   </div>
                 );
