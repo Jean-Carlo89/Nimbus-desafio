@@ -76,10 +76,10 @@ alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique o
 
   return (
     <>
-      <div className="border-red-400 border-4 ">
+      <div className=" border-4 ">
         <h1 className=" text-2xl mb-[15px]">Novo Perímetro</h1>
         <form onSubmit={handleSubmit}>
-          <div className="flex w-min-[600px] w-[750px] justify-between border-green-500 border-4">
+          <div className="flex w-min-[600px] w-[750px] justify-between  border-4">
             <div className=" flex">
               <h2 className="pr-[15px]">Descrição:</h2>
               <input onChange={onChange} value={form.description} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>

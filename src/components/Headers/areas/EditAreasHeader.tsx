@@ -1,24 +1,44 @@
 "use client";
-import { Circle, Marker, Rectangle } from "@/app/map/layout";
+import { Circle, Marker, Rectangle} from "@/app/map/layout";
 import { useGlobalContext } from "@/context/initialGeoCode";
 import { useAddCircle } from "@/hooks/circles/useAddCircle";
 import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { CircleProps, RectanglesProps } from "../../Map";
-import { generateCircle } from "@/helpers/generateCircle";
-import { useAddRectangle } from "@/hooks/rectangles/useAddRectangles";
+import { CircleProps } from "../../Map";
 import { generateRectangle } from "@/helpers/generateRectangle";
 
-type AreasHeaderProps = {
-rectangles: Rectangle[],
-setRectangles : Dispatch<SetStateAction<Rectangle[]>>;
+
+type AreasForm =
+{ lat_sup: number, lat_inf:number, long_left:number, long_right:number, description: "",}
+
+
+type EditRectanglesHeaderProps = {
+id:string
+form :AreasForm,
+setForm: Dispatch<SetStateAction<AreasForm>>;
+setRectangles:  Dispatch<SetStateAction<Rectangle[]>>
 }
 
-export default function AreasHeader({rectangles: circles,setRectangles}:AreasHeaderProps) {
-  const [form, setForm] = useState({ lat_sup: null, lat_inf:null, long_left:null, long_right:null, description: "",});
 
-  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+
+export default function EditCirclesHeader({id, form,setForm,setRectangles}: EditRectanglesHeaderProps) {
+
+
+
+  function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
+    setForm((prev) => {
+      let helper = { ...prev };
+
+      helper[`${e.target.id}`] = e.target.value;
+
+      return helper;
+    });
+  }
+
+
+
+ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     //*** form is transforming to string */
@@ -77,8 +97,8 @@ if (form?.lat_inf !== null && form?.long_left !== null  && form?.long_right !== 
 
 
 
-const initial_rectangle:Rectangle ={
-  id: "",
+const rectangle:Rectangle ={
+  id: id,
   bounds: {
     lat: {
       sup: form.lat_sup,
@@ -95,12 +115,32 @@ const initial_rectangle:Rectangle ={
 
 
 
- const rectangle = generateRectangle(initial_rectangle)
+ 
+
+try {
+
+console.log()
+  const response = await axios.put(`http://localhost:3001/rectangles/${id}`,rectangle)
+
+console.log("updating state")
+
+setRectangles(prevRectangles => {
+      return prevRectangles.map(marker => 
+        marker.id === id ? { ...marker, ...rectangle } : marker
+      );
+    });
 
 
 
 
-  useAddRectangle(rectangle,setRectangles) 
+} catch (error) {
+  console.log(error)
+alert("Houve um erro ao atualizar o circulo")
+}
+
+
+
+
 
   }else{
 alert("Por favor verifique os valores colocados"
@@ -109,22 +149,12 @@ alert("Por favor verifique os valores colocados"
 
   }
 
-  function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-    setForm((prev) => {
-      let helper = { ...prev };
-
-      helper[`${e.target.id}`] = e.target.value;
-
-      return helper;
-    });
-  }
-
   return (
     <>
       <div className=" border-4 ">
-        <h1 className=" text-2xl mb-[15px]">Nova Área</h1>
+        <h1 className=" text-2xl mb-[15px]">Editar Área</h1>
       <form onSubmit={handleSubmit}>
-          <div className="flex w-min-[600px] w-[750px] flex-wrap justify-between  border-4">
+          <div className="flex w-min-[600px] w-[750px] flex-wrap justify-between border-4">
             <div className=" flex my-[10px]" >
               <h2 className="pr-[15px]">Descrição:</h2>
               <input onChange={onChange} value={form?.description || ""} className="w-[100px] rounded border-black border-2" id="description" placeholder={"descrição..."}></input>
@@ -166,5 +196,3 @@ alert("Por favor verifique os valores colocados"
     </>
   );
 }
-
-

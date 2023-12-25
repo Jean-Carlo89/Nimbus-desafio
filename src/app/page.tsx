@@ -77,12 +77,12 @@ const renderHeader = () => {
     
     <div className="  h-[100vh] w-full flex justify-center items-center  ">
       <main className="h-full w-full mx-auto container">
-        <div className="flex flex-col  border-pink-200 border-2 container h-[90vh] max-h-[2000px]  mt-5 rounded-[20px]  ">
+        <div className="flex flex-col  border-2 container h-[90vh] max-h-[2000px]  mt-5 rounded-[20px]  ">
           <div className="flex h-full justify-center w-full ">
             <div className=" w-[30%]  ">
               <ReactSideBar markers={mapMarkers} setMarkers={setMapMarkers} circles={circles} setCircles={setCircles} setActiveHeader={setActiveHeader} setEdit={setEdit}/>
             </div>
-            <div className=" bg-[#F1F2F5]  flex  flex-col container border-red-400 border-4 h-[1000px] w-[1200px] mx-auto ">
+            <div className=" bg-[#F1F2F5]  flex  flex-col container  border-4 h-[1000px] w-[1200px] mx-auto ">
               {/* {children} */}
               {renderHeader()}
               <Map markers={mapMarkers} setMarkers={setMapMarkers} circles={circles} setCircles={setCircles} />

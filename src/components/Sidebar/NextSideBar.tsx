@@ -119,32 +119,32 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
 
 
   return (
-    <div className=" w-full h-full container border-red-500 border-2 flex flex-col justify-between  bg-[#333333] ">
-      <div className=" flex flex-col z-10 items-center  border-blue-500 border-4 ">
-        <MenuLink  href={"/map/pontosIniciais"} className="py-[10px] block   hover:bg-orange-200 cursor-pointer justify-center h-[90%]  border-pink-500 border-4 w-[80%] mt-[20px] bg-[#D6D8DB]"  >
+    <div className=" w-full h-full container   flex flex-col justify-between  bg-[#333333] ">
+      <div className=" flex flex-col z-10 items-center   ">
+        <MenuLink  href={"/map/pontosIniciais"} className="py-[10px] block   rounded  hover:bg-orange-200 cursor-pointer justify-center h-[90%]   w-[80%] mt-[20px] bg-[#D6D8DB]"  >
           Ponto e Zoom Iniciais
         </MenuLink>
 
 
 
-        <div className="pb-[50px]  border-yellow-400 border-2 w-[80%] mt-[20px]">
-          <div className=" mx-auto pb-[10px] border-yellow-400 border-2 w-[80%] mt-[20px] z-10" >
-            <MenuLink href="/map/pontos" className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer"  >
+        <div className="pb-[50px]  w-[80%] mt-[20px]">
+          <div className=" mx-auto pb-[10px]   w-[80%] mt-[20px] z-10" >
+            <MenuLink href="/map/pontos" className="mx-auto  flex justify-center text-white cursor-pointer"  >
               Pontos <span className="ml-[10px]">+</span>
             </MenuLink>
           </div>
 
           <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
             
-            <ul className="flex flex-col justify-center  w-full   border-green-500 border-4">
+            <ul className="flex flex-col justify-center  w-full  ">
               {markers.map((marker, i) => {
                 return (
-                  <div onClick={()=> toggleMarker(marker.id)} key={marker.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${marker.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
+                  <div onClick={()=> toggleMarker(marker.id)} key={marker.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${marker.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                     <li>{"Ponto " + (i + 1)}</li>
 
-<div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/pontos/${marker.id}`} > <FaRegEdit /></Link>
+                    <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/pontos/${marker.id}`} > <FaRegEdit /></Link>
 
-<div className=" z-20 cursor-pointer" onClick={()=>deleteMarker(marker.id)}> <FaRegTrashAlt  /></div></div>
+                    <div className=" z-20 cursor-pointer" onClick={()=>deleteMarker(marker.id)}> <FaRegTrashAlt  /></div></div>
 
 
                    
@@ -154,52 +154,54 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
             </ul>
           </div>
         </div>
-//*************** */
-          <div className="pb-[50px]  border-yellow-400 border-2 w-[80%] mt-[20px]">
-          <div className=" mx-auto pb-[10px] border-yellow-400 border-2 w-[80%] mt-[20px] z-10" >
-            <MenuLink href="/map/perimetros" className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer"  >
-              Perímetros <span className="ml-[10px]">+</span>
-            </MenuLink>
-          </div>
 
-          <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
-            
-            <ul className="flex flex-col justify-center  w-full   border-green-500 border-4">
-              {circles?.map((circle, i) => {
-                return (
-                  <div onClick={()=> toggleCircle(circle.id)} key={circle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${circle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
-                    <li>{"Perímetro " + (i + 1)}</li>
 
-                    <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/perimetros/${circle.id}`} > <FaRegEdit /></Link>
 
-                    <div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div></div>
-                   
-                  </div>
-                );
-              })}
-            </ul>
-          </div>
+          <div className="pb-[50px]  w-[80%] mt-[20px]">
+              <div className=" mx-auto pb-[10px] w-[80%] mt-[20px] z-10" >
+                <MenuLink href="/map/perimetros" className="mx-auto  flex justify-center text-white cursor-pointer"  >
+                  Perímetros <span className="ml-[10px]">+</span>
+                </MenuLink>
+              </div>
+
+              <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
+                
+                <ul className="flex flex-col justify-center  w-full   ">
+                  {circles?.map((circle, i) => {
+                    return (
+                      <div onClick={()=> toggleCircle(circle.id)} key={circle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${circle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
+                        <li>{"Perímetro " + (i + 1)}</li>
+
+                        <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/perimetros/${circle.id}`} > <FaRegEdit /></Link>
+
+                        <div className=" z-20 cursor-pointer" onClick={()=>deleteCircle(circle.id)}> <FaRegTrashAlt  /></div></div>
+                      
+                      </div>
+                    );
+                  })}
+                </ul>
+              </div>
         </div>
 
 
-//****************** */
 
-   <div className="pb-[50px]  border-yellow-400 border-2 w-[80%] mt-[20px]">
-          <div className=" mx-auto pb-[10px] border-yellow-400 border-2 w-[80%] mt-[20px] z-10" >
-            <MenuLink href="/map/areas" className="mx-auto border-red-400 border-2 flex justify-center text-white cursor-pointer"  >
+
+   <div className="pb-[50px]   w-[80%] mt-[20px]">
+          <div className=" mx-auto pb-[10px]  w-[80%] mt-[20px] z-10" >
+            <MenuLink href="/map/areas" className="mx-auto flex justify-center text-white cursor-pointer"  >
               Áreas <span className="ml-[10px]">+</span>
             </MenuLink>
           </div>
 
           <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
             
-            <ul className="flex flex-col justify-center  w-full   border-green-500 border-4">
+            <ul className="flex flex-col justify-center  w-full  ">
               {rectangles?.map((rectangle, i) => {
                 return (
-                  <div onClick={()=> toggleRectangle(rectangle.id)} key={rectangle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]  border-pink-500 border-4 " + `${rectangle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
+                  <div onClick={()=> toggleRectangle(rectangle.id)} key={rectangle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${rectangle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                     <li>{"Perímetro " + (i + 1)}</li>
 
-                      <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/areass/${rectangle.id}`} > <FaRegEdit /></Link>
+                      <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/areas/${rectangle.id}`} > <FaRegEdit /></Link>
 
                       <div className=" z-20 cursor-pointer" onClick={()=>deleteRectangle(rectangle.id)}> <FaRegTrashAlt  /></div></div>
                    

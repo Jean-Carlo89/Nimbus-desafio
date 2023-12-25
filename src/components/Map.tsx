@@ -212,11 +212,6 @@ return circles.map((circle,index)=>{
 
 function Rectangles(){
 
-
-
-
-
-
 return rectangles.map((rectangle,index)=>{
 
 // rec[0].lat = ltitue superior,
@@ -234,7 +229,7 @@ return rectangles.map((rectangle,index)=>{
   ]
 
   if(rectangle.is_active){
-    return <Rectangle key={rectangle.id || index } bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
+    return <Rectangle key={rectangle?.id || index } bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { rectangle?.description || "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
     }
 
 
@@ -252,15 +247,15 @@ return rectangles.map((rectangle,index)=>{
       async click(e) {
        
 
-const initial_marker : appMarker = {
-  id: e.latlng.lat + 1,
-  geoCode: {
-    lat: e.latlng.lat,
-    lng: e.latlng.lng
-  },
-  popUp: "",
-  is_active: true
-}
+  const initial_marker : appMarker = {
+    id: e.latlng.lat + 1,
+    geoCode: {
+      lat: e.latlng.lat,
+      lng: e.latlng.lng
+    },
+    popUp: "",
+    is_active: true
+  }
 
 const marker = generateMarker(initial_marker)
 await useAddMarker(marker, setMapData)
