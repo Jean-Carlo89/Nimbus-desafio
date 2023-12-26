@@ -121,7 +121,7 @@ const response = await api.Rectangles.delete(id)
 
 
   return (
-    <div className=" w-full h-full container   flex flex-col justify-between  bg-[#333333] ">
+    <div className=" w-full h-full container   flex flex-col justify-between  bg-[#333333] overflow overflow-y-scroll no-scrollbar ">
       <div className=" flex flex-col z-10 items-center   ">
         <MenuLink  href={"/map/pontosIniciais"} className="py-[10px] block   rounded  hover:bg-orange-200 cursor-pointer justify-center h-[90%]   w-[80%] mt-[20px] bg-[#D6D8DB]"  >
           Ponto e Zoom Iniciais

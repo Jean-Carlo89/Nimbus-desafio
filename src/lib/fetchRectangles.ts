@@ -8,9 +8,9 @@ export async function fetchRectangles()  {
   
     
 
-  const res = await MockApi.Rectangles.get()
+  const rectangles = await MockApi.Rectangles.get()
 
-    const rectangles : Rectangle[] = await res.json();
+   
 
 
     return rectangles?.length ? rectangles : []

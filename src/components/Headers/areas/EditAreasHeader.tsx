@@ -51,7 +51,8 @@ export default function EditCirclesHeader({id, form,setForm,setRectangles}: Edit
     const description = form?.description;
 
 
-   
+
+
     const invalidValues = [];
 
     if (isNaN(lat_inf)) {
@@ -102,15 +103,15 @@ const rectangle:Rectangle ={
   id: id,
   bounds: {
     lat: {
-      sup: form.lat_sup,
-      inf: form.lat_inf
+      sup: lat_sup,
+      inf: lat_inf
     },
     lng: {
-      left: form.long_left,
-      right: form.long_right
+      left: long_left,
+      right: long_right
     }
   },
-  description: form.description,
+  description: description,
   is_active: true
 }
 

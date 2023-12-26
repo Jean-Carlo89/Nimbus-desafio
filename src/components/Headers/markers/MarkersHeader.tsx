@@ -58,10 +58,10 @@ if (form.lat !== null && form.long !== null) {
 const initial_marker  : Marker = {
   id: form.lat + 1,
   geoCode: {
-    lat: form.lat,
-    lng: form.long
+    lat: lat,
+    lng: long
   },
-  popUp: form.description || "",
+  popUp: description || "",
 is_active:true
 }
 

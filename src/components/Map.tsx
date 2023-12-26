@@ -171,7 +171,7 @@ rectangle:{shapeOptions: {
 			weight: 4, 
 			opacity: 0.5,
 			fill: false,
-			fillColor: null, //same as color by default
+			fillColor: null, 
 			fillOpacity: 0.2,
 			showArea: true,
 dashArray : '10, 5' ,
@@ -201,7 +201,7 @@ function Circles(){
 return circles.map((circle,index)=>{
 
   if(circle.is_active){
-    return <Circle key={circle.id || index } center={circle.center} radius={circle.radius} opacity={1} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
+    return <Circle key={circle.id || index } center={circle.center} radius={circle.radius} opacity={0.4} fillOpacity={0.02} > <Popup > {circle.description || "Sem descrição no momento"}</Popup></Circle>
   }
 
 })

@@ -45,6 +45,8 @@ export default function EditCirclesHeader({id, form,setForm,setCircles}: EditCir
 const radius = parseFloat(form?.radius)
 
    
+
+
     const invalidValues = [];
 
     if (isNaN(lat)) {
@@ -71,9 +73,9 @@ if (form?.lat !== null && form?.long !== null && form?.radius !==null) {
 
 
 const circle:Circle ={
-  center: [form?.lat, form?.long],
-  radius:form?.radius,
-  description: form?.description,
+  center: [lat, long],
+  radius:radius,
+  description: description,
   id: id,
 is_active:true
 
@@ -82,6 +84,8 @@ is_active:true
 
 try {
   
+
+
 
 await MockApi.Circles.patch(id,circle)
 
