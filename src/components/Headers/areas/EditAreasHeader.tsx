@@ -7,6 +7,7 @@ import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CircleProps } from "../../Map";
 import { generateRectangle } from "@/helpers/generateRectangle";
+import { MockApi } from "@/mocks/mock-api";
 
 
 type AreasForm =
@@ -119,10 +120,10 @@ const rectangle:Rectangle ={
 
 try {
 
-console.log()
-  const response = await axios.put(`http://localhost:3001/rectangles/${id}`,rectangle)
 
-console.log("updating state")
+
+await MockApi.Rectangles.patch(id, rectangle)
+
 
 setRectangles(prevRectangles => {
       return prevRectangles.map(marker => 

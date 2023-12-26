@@ -6,6 +6,7 @@ import { useAddMarker } from "@/hooks/markers/useAddMarker";
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { CircleProps } from "../../Map";
+import { MockApi } from "@/mocks/mock-api";
 
 type CircleForm = {lat:number, long:number, radius:number , description:string}
 
@@ -69,7 +70,7 @@ if (form?.lat !== null && form?.long !== null && form?.radius !==null) {
  
 
 
-const circle:CircleProps ={
+const circle:Circle ={
   center: [form?.lat, form?.long],
   radius:form?.radius,
   description: form?.description,
@@ -80,7 +81,9 @@ is_active:true
 
 
 try {
-  const response = await axios.put(`http://localhost:3001/circles/${id}`,circle)
+  
+
+await MockApi.Circles.patch(id,circle)
 
 setCircles(prevCircles => {
       return prevCircles.map(marker => 

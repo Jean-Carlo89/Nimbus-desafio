@@ -18,6 +18,7 @@ setRectangles : Dispatch<SetStateAction<Rectangle[]>>;
 export default function AreasHeader({rectangles: circles,setRectangles}:AreasHeaderProps) {
   const [form, setForm] = useState({ lat_sup: null, lat_inf:null, long_left:null, long_right:null, description: "",});
 
+const addRectangle = useAddRectangle()
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -100,7 +101,9 @@ const initial_rectangle:Rectangle ={
 
 
 
-  useAddRectangle(rectangle,setRectangles) 
+  //useAddRectangle(rectangle,setRectangles) 
+
+addRectangle(rectangle, setRectangles)
 
   }else{
 alert("Por favor verifique os valores colocados"

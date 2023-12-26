@@ -1,0 +1,109 @@
+{
+  "markers": [
+    {
+      "id": "e630b0ab-9089-45e2-8c57-045db4c2b68b",
+      "geoCode": {
+        "lat": -12.924751546606227,
+        "lng": -38.443232895560286
+      },
+      "popUp": "",
+      "is_active": true
+    },
+    {
+      "id": "be4186ad-93b3-4648-96c0-68cdf152b9cc",
+      "geoCode": {
+        "lat": -12.954190490438261,
+        "lng": -38.491652529696104
+      },
+      "popUp": "",
+      "is_active": true
+    },
+    {
+      "id": "74b48feb-2ecb-41dd-ad5a-cb9f94de6a8a",
+      "geoCode": {
+        "lat": -12.85637001398064,
+        "lng": -38.69920089588415
+      },
+      "popUp": "\"testanfdo\"",
+      "is_active": true
+    },
+    {
+      "id": "0949159d-9813-45a3-8c5c-f14582aa07d9",
+      "geoCode": {
+        "lat": -12.962404992468613,
+        "lng": -38.436281955336085
+      },
+      "popUp": "",
+      "is_active": true
+    }
+  ],
+  "circles": [
+    {
+      "center": [
+        -12.884771740553582,
+        -38.53103758208228
+      ],
+      "radius": 5984.626035851352,
+      "description": "",
+      "id": "90b94231-b039-4b31-8a5c-511851c7cd88",
+      "is_active": true
+    },
+    {
+      "center": [
+        "-12.44167647859546",
+        "-38.895999041202836"
+      ],
+      "radius": "4255.72553423854",
+      "description": "\"mudando desc\"",
+      "id": "bd484ca3-04d4-4d36-be93-5a415f0e63c3",
+      "is_active": true
+    }
+  ],
+  "rectangles": [
+    {
+      "id": "f5075fc0-4867-4e7d-bc3d-3a6ba3507866",
+      "bounds": {
+        "lat": {
+          "sup": -13.00656484083653,
+          "inf": -12.949021672124388
+        },
+        "lng": {
+          "left": -38.62064155085498,
+          "right": -38.53037951876899
+        }
+      },
+      "description": "",
+      "is_active": true
+    },
+    {
+      "id": "14aeb1a0-fb50-4eee-bb16-02b026aeacf8",
+      "bounds": {
+        "lat": {
+          "sup": -12.922587503316352,
+          "inf": -12.862012599320627
+        },
+        "lng": {
+          "left": -38.50016784309121,
+          "right": -38.40235537486119
+        }
+      },
+      "description": "",
+      "is_active": true
+    },
+    {
+      "id": "268cdae2-c839-425e-b579-2d218a761c74",
+      "bounds": {
+        "lat": {
+          "sup": "-12.736573469208252",
+          "inf": "-12.945507104009116"
+        },
+        "lng": {
+          "left": "-38.38707579848711",
+          "right": "-38.54155830189224"
+        }
+      },
+      "description": "Noca desc ret",
+      "is_active": true
+    }
+  ]
+}

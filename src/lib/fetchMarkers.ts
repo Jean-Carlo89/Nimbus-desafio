@@ -1,17 +1,13 @@
 import { Marker } from "@/app/map/layout";
+import { MockApi } from "@/mocks/mock-api";
 
 
 export async function fetchMarkers()  {
   try {
   
-    const res = await fetch("http://localhost:3001/markers");
-
-
-    
-
-    const markers : Marker[] = await res.json();
-
-     return markers?.length ? markers : []
+ 
+const markers =await MockApi.Markers.get()
+     return markers?.length >0 ? markers : []
   } catch (e) {
     if (e instanceof Error) {
       console.log(e.message);

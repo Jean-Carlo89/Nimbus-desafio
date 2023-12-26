@@ -27,6 +27,7 @@ import { sensitiveHeaders } from "http2";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { rectangle } from "leaflet";
+import { MockApi } from "@/mocks/mock-api";
 
 type BarProps = {
   children: React.ReactNode;
@@ -50,11 +51,13 @@ export type SideBarProps = {
 
 export default function SideBar({ markers, setMarkers,  circles,setCircles , rectangles, setRectangles}: SideBarProps) {
 
+const api = MockApi
 const router = useRouter()
 
 async function deleteMarker(id:any){
 
-const response = await axios.delete(`http://localhost:3001/markers/${id}`)
+
+const response = await api.Markers.delete(id)
 
  if (response.status === 200) {
         const updatedMarkers = markers.filter(marker => marker.id !== id);
@@ -86,8 +89,8 @@ function toggleRectangle(id:any) {
 
 async function deleteCircle(id:any){
 
-const response = await axios.delete(`http://localhost:3001/circles/${id}`)
 
+const response = await api.Circles.delete(id)
  if (response.status === 200) {
         const updatedMarkers = circles.filter(marker => marker.id !== id);
         setCircles(updatedMarkers);
@@ -95,14 +98,13 @@ router.push("/map/perimetros")
 
     }
 
-
-
-
 }
 
 async function deleteRectangle(id:any){
 
-const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
+
+
+const response = await api.Rectangles.delete(id)
 
   if (response.status === 200) {
       const updatedMarkers = rectangles.filter(marker => marker.id !== id);
@@ -137,7 +139,7 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
           <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
             
             <ul className="flex flex-col justify-center  w-full  ">
-              {markers.map((marker, i) => {
+              {  markers.length >0 ?  markers.map((marker, i) => {
                 return (
                   <div onClick={()=> toggleMarker(marker.id)} key={marker.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${marker.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                     <li>{"Ponto " + (i + 1)}</li>
@@ -150,7 +152,7 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
                    
                   </div>
                 );
-              })}
+              }):  <div className="text-white mx-auto mt-[5px]">Sem Pontos adicionados</div> } 
             </ul>
           </div>
         </div>
@@ -167,7 +169,7 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
               <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
                 
                 <ul className="flex flex-col justify-center  w-full   ">
-                  {circles?.map((circle, i) => {
+                  { circles.length > 0 ? circles?.map((circle, i) => {
                     return (
                       <div onClick={()=> toggleCircle(circle.id)} key={circle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${circle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
                         <li>{"Perímetro " + (i + 1)}</li>
@@ -178,7 +180,7 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
                       
                       </div>
                     );
-                  })}
+                  }) : <div className="text-white mx-auto mt-[5px]">Sem Perímetros adicionados</div> }
                 </ul>
               </div>
         </div>
@@ -196,10 +198,10 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
           <div className="overflow overflow-y-scroll no-scrollbar max-h-[300px] ">
             
             <ul className="flex flex-col justify-center  w-full  ">
-              {rectangles?.map((rectangle, i) => {
+              {rectangles.length >0 ?  rectangles?.map((rectangle, i) => {
                 return (
                   <div onClick={()=> toggleRectangle(rectangle.id)} key={rectangle.id || i} className={" rounded mb-[5px] cursor-pointer py-[10px] flex justify-between w-full h-[90%]    " + `${rectangle.is_active ? "bg-[#C18E47]" :"bg-[#D6D8DB]" }`}>
-                    <li>{"Perímetro " + (i + 1)}</li>
+                    <li>{"Área " + (i + 1)}</li>
 
                       <div className="flex"><Link onClick={(e)=>e.stopPropagation()} className=" z-20 cursor-pointer" href={`/map/areas/${rectangle.id}`} > <FaRegEdit /></Link>
 
@@ -207,7 +209,7 @@ const response = await axios.delete(`http://localhost:3001/rectangles/${id}`)
                    
                   </div>
                 );
-              })}
+              }) : <div className="text-white mx-auto mt-[5px]">Sem Áreas adicionadas</div> }
             </ul>
           </div>
         </div>

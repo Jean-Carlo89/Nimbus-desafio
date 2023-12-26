@@ -1,32 +1,40 @@
-"use client"
+
 import { Marker } from "@/app/map/layout";
+import { MockApi } from "@/mocks/mock-api";
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
 
+export const useAddMarker = () => {
+  const addMarker = useCallback(
+    async (marker: Marker, setMarkers: Dispatch<SetStateAction<Marker[]>>) => {
+      const markerValue: Marker = {
+        id: marker.id,
+        geoCode: { lat: marker.geoCode.lat, lng: marker.geoCode.lng },
+        popUp: marker.popUp || "",
+        is_active: true
+      };
 
-export async function useAddMarker(props:Marker, setMarkers:  Dispatch<SetStateAction<Marker[]>>){
+      try {
+       
 
+const result = await MockApi.Markers.post(marker)
 
- const marker_value : Marker = {
-    id: props.id,
-    geoCode: { lat: props.geoCode.lat, lng: props.geoCode.lng },
-    popUp: props.popUp || "",
-is_active: true
-
-  }
-
- try {
-          const result = await axios.post("http://localhost:3001/markers", marker_value);
-
-
-
-          if (result.status === 201) {
-            setMarkers((prevValue) => [
-              ...prevValue,
-             marker_value
-            ]);
-          }
-        } catch (error) {
-          console.log(error);
+        if (result.status === 201) {
+          setMarkers(prevValue => [
+            ...prevValue,
+            markerValue
+          ]);
         }
-}
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
+
+  return addMarker;
+};
+
+
+
+

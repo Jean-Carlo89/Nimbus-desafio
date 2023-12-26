@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react'
 
 import { useCirclesContext } from '@/context/areas';
 import EditCirclesHeader from '@/components/Headers/circles/EditCircleHeader';
+import { mock } from 'node:test';
+import { MockApi } from '@/mocks/mock-api';
 
 export default function PerimetroPage({ params }: { params: { id: string } }) {
 
@@ -14,7 +16,7 @@ const [form,setForm] = useState({lat:0, long: 0, description:"", radius:0})
 useEffect(()=>{
 
 
-fetch(`http://localhost:3001/circles/${params.id}`).then((res)=>{
+MockApi.Circles.getById(params.id).then((res)=>{
 res.json().then((res)=>{
 
 setForm({lat:res.center[0], long:res.center[1], description:res.description, radius: res.radius})

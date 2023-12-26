@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { useCirclesContext, useRectanglesContext } from '@/context/areas';
 import EditCirclesHeader from '@/components/Headers/circles/EditCircleHeader';
 import EditAreasHeader from '@/components/Headers/areas/EditAreasHeader';
+import { MockApi } from '@/mocks/mock-api';
 
 export default function PerimetroPage({ params }: { params: { id: string } }) {
 
@@ -15,7 +16,8 @@ const [form,setForm] = useState({lat_sup: 0, lat_inf:0, long_left:0, long_right:
 useEffect(()=>{
 
 
-fetch(`http://localhost:3001/rectangles/${params.id}`).then((res)=>{
+
+MockApi.Rectangles.getById(params.id).then((res)=>{
 res.json().then((res)=>{
 
 const bounds = res.bounds

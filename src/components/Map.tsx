@@ -10,7 +10,7 @@ import MarkerShadow from "../../node_modules/leaflet/dist/images/marker-shadow.p
 import { useGlobalContext } from "@/context/initialGeoCode";
 import {  Rectangle as appRectangle, Circle as appCircle, Marker as appMarker } from "@/app/map/layout";
 import axios from "axios";
-import { useAddMarker } from "@/hooks/markers/useAddMarker";
+
 import "leaflet-draw/dist/leaflet.draw.css"
 import {EditControl} from "react-leaflet-draw"
 import { useAddCircle } from "@/hooks/circles/useAddCircle";
@@ -18,6 +18,8 @@ import { generateMarker } from "@/helpers/generateMarkers";
 import { generateCircle as generateCircle } from "@/helpers/generateCircle";
 import { useAddRectangle } from "@/hooks/rectangles/useAddRectangles";
 import { generateRectangle } from "@/helpers/generateRectangle";
+import { useAddMarker } from "@/hooks/markers/useAddMarker";
+
 
 type MapProps = {
   markers: appMarker[];
@@ -47,8 +49,9 @@ is_active: boolean
 }
 
 export default function Map({ markers: mapData, setMarkers: setMapData, circles, setCircles , rectangles,setRectangles }: MapProps) {
-  
-
+  const addCircle = useAddCircle()
+const addMarker = useAddMarker()
+const addRectangle = useAddRectangle()
   useEffect(() => {
     const storedGeoCode = localStorage.getItem("initialGeoCode");
     if (storedGeoCode) {
@@ -88,7 +91,8 @@ fill:false,
 
 
 
-useAddCircle(circle, setCircles)
+//useAddCircle(circle, setCircles)
+addCircle(circle,setCircles)
 }
 
   
@@ -136,13 +140,9 @@ const initial_rectangle:RectanglesProps ={
  const rectangle = generateRectangle(initial_rectangle)
 
 
-
-  useAddRectangle(rectangle,setRectangles) 
+addRectangle(rectangle,setRectangles)
   }
 }
-
-
-
 
 
 
@@ -258,7 +258,9 @@ return rectangles.map((rectangle,index)=>{
   }
 
 const marker = generateMarker(initial_marker)
-await useAddMarker(marker, setMapData)
+// await useAddMarker(marker, setMapData)
+
+await addMarker(marker, setMapData)
 
         
       },

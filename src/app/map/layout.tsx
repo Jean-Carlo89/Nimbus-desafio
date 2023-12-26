@@ -1,15 +1,12 @@
 "use client";
 import { SetStateAction, useEffect, useState } from "react";
-import SideBar from "../../components/Sidebar/ReactSidebar";
 import Map from "@/components/Map";
 import NextSideBar from "@/components/Sidebar/NextSideBar";
-import CirclesHeader from "@/components/Headers/CirclesHeader";
-import InitialPointsHeader from "@/components/Headers/InitialPointHeader";
-import MarkersHeader from "@/components/Headers/markers/MarkersHeader";
 import { fetchCircles } from "@/lib/fetchCircles";
 import { fetchMarkers } from "@/lib/fetchMarkers";
 import { DataContextProvider, useCirclesContext, useMarkersContext, useRectanglesContext } from "@/context/areas";
 import { fetchRectangles } from "@/lib/fetchRectangles";
+
 
 type MapLayoutProps = {
   children: React.ReactNode;
@@ -46,11 +43,6 @@ is_active: boolean
 export default function MapLayout({ children }: MapLayoutProps) {
 
 
-const headerComponents = {
-  InitialPoints: InitialPointsHeader,
-  Markers: MarkersHeader,
-  Circles: CirclesHeader
-};
 
 
 
@@ -67,6 +59,8 @@ const {rectangles, setRectangles}  = useRectanglesContext()
 fetchMarkers().then((res)=>{
 
   const updatedMapData = res.map(item => ({ ...item, is_active: true }));
+
+
     setMarkers(updatedMapData);
 
 
@@ -85,6 +79,8 @@ fetchMarkers().then((res)=>{
 
 
   })
+
+
   
  }, []);
 

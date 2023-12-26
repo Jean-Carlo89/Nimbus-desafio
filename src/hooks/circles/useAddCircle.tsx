@@ -1,26 +1,35 @@
-"use client"
-import { Circle, Marker } from "@/app/map/layout";
+
+import { Circle } from "@/app/map/layout";
+import { MockApi } from "@/mocks/mock-api";
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
+import { mock } from "node:test";
+import { Dispatch, SetStateAction, useCallback } from "react";
 
+export const useAddCircle = () => {
+  
+  const addCircle = useCallback(
+    async (circle: Circle, setCircles: Dispatch<SetStateAction<Circle[]>>) => {
+      try {
+   
 
-export async function useAddCircle(props:Circle, setMarkers:  Dispatch<SetStateAction<Circle[]>>){
+const result = await MockApi.Circles.post(circle)
 
-
-
-
- try {
-          const result = await axios.post("http://localhost:3001/circles", props);
-
-
-
-          if (result.status === 201) {
-            setMarkers((prevValue) => [
-              ...prevValue,
-            props
-            ]);
-          }
-        } catch (error) {
-          console.log(error);
+        if (result.status === 201) {
+          setCircles((prevValue) => [
+            ...prevValue,
+            circle
+          ]);
         }
-}
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
+
+  return addCircle;
+};
+
+
+
+

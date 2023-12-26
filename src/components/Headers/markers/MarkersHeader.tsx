@@ -2,7 +2,8 @@
 import { Marker } from "@/app/map/layout";
 import { useGlobalContext } from "@/context/initialGeoCode";
 import { generateMarker } from "@/helpers/generateMarkers";
-import { useAddMarker } from "@/hooks/markers/useAddMarker";
+import {useAddMarker} from "@/hooks/markers/useAddMarker";
+
 import axios from "axios";
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
@@ -22,7 +23,7 @@ export default function MarkersHeader({setMarkers,edit=false, form,setForm , upd
 
 
 
-
+const addMarker = useAddMarker()
 
 
 
@@ -71,7 +72,8 @@ if(edit){
 await updateMarker()
 
 }else{
-await useAddMarker(marker, setMarkers)
+// await useAddMarker(marker, setMarkers)
+await addMarker(marker,setMarkers)
 }
 
 

@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Marker } from "../../layout";
 import MarkersHeader from "@/components/Headers/markers/MarkersHeader";
 import { useMarkersContext } from "@/context/areas";
+import { MockApi } from "@/mocks/mock-api";
 
 export default function PontoPage({ params }: { params: { id: string } }) {
 
@@ -14,16 +15,18 @@ export default function PontoPage({ params }: { params: { id: string } }) {
 
 
 const {markers, setMarkers} = useMarkersContext()
-  const [form, setForm] = useState({ lat: null, long: null, description: null });
+  const [form, setForm] = useState({ lat: 0, long: 0, description: "" });
 
-
+const api = MockApi
 
 
 
 useEffect(()=>{
 
+//fetch(`http://localhost:3001/markers/${params.id}`)
 
-fetch(`http://localhost:3001/markers/${params.id}`).then((res)=>{
+
+api.Markers.getById(params.id).then((res)=>{
 res.json().then((res)=>{
 
 setForm({lat:res.geoCode.lat, long:res.geoCode.lng, description:res.popUp})
@@ -50,7 +53,9 @@ const body : Marker = {
  is_active:true
 }
 try {
-  const response = await axios.put(`http://localhost:3001/markers/${params.id}`,body)
+ 
+
+const response = await api.Markers.patch(params.id, body)
 
 setMarkers(prevMarkers => {
       return prevMarkers.map(marker => 

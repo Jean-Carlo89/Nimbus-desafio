@@ -39,15 +39,7 @@ const {markers, setMarkers} = useMarkersContext()
    
   }
 
-  // function onChange(e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>) {
-  //   setForm((prev) => {
-  //     let helper = { ...prev };
-
-  //     helper[`${e.target.id}`] = e.target.value;
-
-  //     return helper;
-  //   });
-  // }
+  
 
   return (
 

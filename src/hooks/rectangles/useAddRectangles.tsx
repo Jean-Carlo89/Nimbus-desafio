@@ -1,24 +1,33 @@
-"use client"
-import {Rectangle } from "@/app/map/layout";
+import { Rectangle } from "@/app/map/layout";
+import { MockApi } from "@/mocks/mock-api";
 import axios from "axios";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useCallback } from "react";
+
+export const useAddRectangle = () => {
+  const addRectangle = useCallback(
+    async (rectangle: Rectangle, setRectangles: Dispatch<SetStateAction<Rectangle[]>>) => {
+      try {
 
 
-export async function useAddRectangle(props: Rectangle, setRectangles:  Dispatch<SetStateAction<Rectangle[]>>){
+    
 
+const result = await MockApi.Rectangles.post(rectangle)
 
-
-
- try {
-          const result = await axios.post("http://localhost:3001/rectangles", props);
-
-          if (result.status === 201) {
-            setRectangles((prevValue) => [
-              ...prevValue,
-            props
-            ]);
-          }
-        } catch (error) {
-          console.log(error);
+        if (result.status === 201) {
+          setRectangles(prevValue => [...prevValue, rectangle]);
         }
-}
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    []
+  );
+
+  return addRectangle;
+};
+
+
+
+
+
+

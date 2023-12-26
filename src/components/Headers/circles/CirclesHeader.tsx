@@ -16,6 +16,8 @@ setCircles : Dispatch<SetStateAction<Circle[]>>;
 export default function CirclesHeader({circles,setCircles}:CirclesHeaderProps) {
   const [form, setForm] = useState({ lat: null, long: null, description: "", radius:null });
 
+const addCircle = useAddCircle()
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -63,7 +65,8 @@ is_active:true
 
 const circle = generateCircle(initial_circle)
 
-useAddCircle(circle, setCircles)
+
+addCircle(circle,setCircles)
 
   }else{
 alert("Latitude, Longitude ou raio recebram valores nulos. Por favor verifique os valores colocados"
