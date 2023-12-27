@@ -1,4 +1,4 @@
-# Desafio Técnico Nimnbus
+# Desafio Técnico Nimbus
 
 
 
@@ -7,9 +7,10 @@
 Obs1: As portas 3000 e 3001 precisam estar livres para a aplicação e mock da api
 
 Obs2 : Há alguns valores iniciais de pontos que podem ser deletados ou editados.  Eles estão nas coordenadas: 
-latitude: -12.926937622341308
-longitude: -38.50122427410508
-zoom: (preferencialmente 13)
+
+1. latitude: -12.926937622341308
+2. longitude: -38.50122427410508
+3. zoom: (preferencialmente 13)
 
 Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
 
