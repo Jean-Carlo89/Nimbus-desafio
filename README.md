@@ -21,6 +21,7 @@ Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
    ### `npm i`
  3.  Após a instalação, rodar o projeto
    ### `npm run dev`
+ 4. Acessar http://localhost:3000/map
 
    
 
