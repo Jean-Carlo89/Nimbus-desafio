@@ -5,7 +5,7 @@ const nextConfig = {
             {
                 source: '/',
                 destination: '/map',
-                permanent: true
+                permanent: false
             },
         ];
     },

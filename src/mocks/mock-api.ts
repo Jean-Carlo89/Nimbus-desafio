@@ -1,5 +1,5 @@
 import { Circle, Marker, Rectangle } from "@/app/map/layout";
-const host = process.env.NEXT_PUBLIC_MOCK_API_HOST
+const host = process.env.NEXT_PUBLIC_MOCK_API_HOST || "http://localhost:3001"
 
 export const MockApi = {
 
