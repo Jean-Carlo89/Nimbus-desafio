@@ -4,8 +4,10 @@ WORKDIR /home/node/app
 
 COPY package.json .
 
+RUN npm i
+
 COPY . .
 
-CMD ["tail", "-f" ,"/dev/null"]
+#CMD ["tail", "-f" ,"/dev/null"]
 
-#CMD ["npm", "run" ,"dev:json-server"]
+CMD ["npm", "run" ,"dev"]

@@ -148,7 +148,7 @@ addRectangle(rectangle,setRectangles)
 
  
   return (
-    <div className="container border-4 mx-auto">
+    <div className="container  mx-auto">
       <div className="mx-auto ">
         <MapContainer center={[initialGeoCode?.lat, initialGeoCode?.long]} zoom={initialGeoCode?.zoom} scrollWheelZoom={true} >
 
@@ -229,7 +229,7 @@ return rectangles.map((rectangle,index)=>{
   ]
 
   if(rectangle.is_active){
-    return <Rectangle key={rectangle?.id || index } bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { rectangle?.description || "Sem descrição no momento para o retangulo"}</Popup></Rectangle>
+    return <Rectangle key={rectangle?.id || index } bounds={bounds} color="#444141"  opacity={0.5} stroke={true} fill={false} weight={4} dashArray={'10, 5'} > <Popup > { rectangle?.description || "Sem descrição no momento"}</Popup></Rectangle>
     }
 
 
@@ -258,7 +258,7 @@ return rectangles.map((rectangle,index)=>{
   }
 
 const marker = generateMarker(initial_marker)
-// await useAddMarker(marker, setMapData)
+
 
 await addMarker(marker, setMapData)
 
@@ -274,7 +274,7 @@ if(marker.is_active){
   return (
             <div key={i}>
               <Marker position={marker.geoCode} icon={new Icon({ iconRetinaUrl: MarkerIcon.src, iconUrl: MarkerIcon.src, shadowUrl: require("leaflet/dist/images/marker-shadow.png"), popupAnchor: [0, -41], iconAnchor: [16, 48] })}>
-                <Popup>{marker.popUp || "No description"}</Popup>
+                <Popup>{marker.popUp || "Sem descrição"}</Popup>
               </Marker>{" "}
             </div>
           );

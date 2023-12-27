@@ -38,7 +38,7 @@ export default function PontosInicaisPage() {
     }
 
     try {
-      setInitialGeoCode({ lat: form.lat, long: form.long, zoom: form.zoom });
+      setInitialGeoCode({ lat: lat, long: long, zoom: zoom });
 
       localStorage.setItem("initialGeoCode", JSON.stringify({ lat, long, zoom }));
     } catch (error) {
