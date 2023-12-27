@@ -35,6 +35,8 @@ Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
 
     ### `docker-compose up` ou `docker compose up` a depender da versão do do Docker
 
+2. Acessar http://localhost:3000/map
+
 
  
 
