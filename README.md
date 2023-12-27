@@ -1,10 +1,19 @@
-# Desafio Técnico Nimnus
+# Desafio Técnico Nimnbus
 
 
 
 ## Como Rodar: 
 
-## 1
+Obs1: As portas 3000 e 3001 precisam estar livres para a aplicação e mock da api
+
+Obs2 : Há alguns valores iniciais de pontos que podem ser deletados ou editados.  Eles estão nas coordenadas: 
+latitude: -12.926937622341308
+longitude: -38.50122427410508
+zoom: (preferencialmente 13)
+
+Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
+
+## 1 . Por clonagem do repositório 
 
  1. Clonar o repositório
  2. Na pasta clonada, instalar as dependências
