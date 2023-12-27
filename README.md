@@ -18,7 +18,7 @@ Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
 
 
  1. Clonar o repositório
- 2. Ter a versã0 do node v18.19.0 ou maior
+ 2. Ter a versã0 do Node v18.19.0 ou maior
  4. Na pasta clonada, instalar as dependências
    ### `npm i`
  5.  Após a instalação, rodar o projeto
