@@ -1,9 +1,9 @@
 import { Circle, Marker, Rectangle } from "@/app/map/layout";
-const host = process.env.NEXT_PUBLIC_MOCK_API_HOST || "http://localhost:3001"
+const host = "http://localhost:3001"
 
 export const MockApi = {
 
-  Markers  :{// Markers
+  Markers  :{
   async post(markerData: Marker) {
 
 
@@ -50,7 +50,7 @@ return response
 
 },
 
-Circles  :{// Markers
+Circles  :{
   async post(circle:Circle) {
 
 

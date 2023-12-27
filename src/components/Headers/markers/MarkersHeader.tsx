@@ -72,7 +72,7 @@ if(edit){
 await updateMarker()
 
 }else{
-// await useAddMarker(marker, setMarkers)
+
 await addMarker(marker,setMarkers)
 }
 

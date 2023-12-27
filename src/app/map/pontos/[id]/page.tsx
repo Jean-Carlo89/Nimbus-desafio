@@ -23,7 +23,7 @@ const api = MockApi
 
 useEffect(()=>{
 
-//fetch(`http://localhost:3001/markers/${params.id}`)
+
 
 
 api.Markers.getById(params.id).then((res)=>{

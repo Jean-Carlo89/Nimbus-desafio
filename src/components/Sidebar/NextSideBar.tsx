@@ -74,7 +74,7 @@ function toggleMarker(id:any) {
 
 
 
-//********** */
+
 function toggleCircle(id:any) {
   setCircles(prevMarkers => prevMarkers.map(circle => 
     circle.id === id ? { ...circle, is_active: !circle.is_active } : circle

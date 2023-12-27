@@ -101,7 +101,7 @@ const initial_rectangle:Rectangle ={
 
 
 
-  //useAddRectangle(rectangle,setRectangles) 
+  
 
 addRectangle(rectangle, setRectangles)
 

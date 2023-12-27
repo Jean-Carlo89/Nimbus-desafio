@@ -84,14 +84,13 @@ is_active:true
 const circle = generateCircle(initial_circle)
 
  e.layer.setStyle({
-        //color: "red",
+        
 fill:false,
         stroke: false
     });
 
 
 
-//useAddCircle(circle, setCircles)
 addCircle(circle,setCircles)
 }
 
@@ -102,7 +101,7 @@ addCircle(circle,setCircles)
   
 
  e.layer.setStyle({
-        //color: "red",
+        
 fill:false,
         stroke: false
     });
