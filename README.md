@@ -16,12 +16,14 @@ Para Basta mudar as coordenadas para as citadas acima no menu de pontos iniciais
 
 ## 1 . Por clonagem do repositório 
 
+
  1. Clonar o repositório
- 2. Na pasta clonada, instalar as dependências
+ 2. Ter a versã0 do node v18.19.0 ou maior
+ 4. Na pasta clonada, instalar as dependências
    ### `npm i`
- 3.  Após a instalação, rodar o projeto
+ 5.  Após a instalação, rodar o projeto
    ### `npm run dev`
- 4. Acessar http://localhost:3000/map
+ 6. Acessar http://localhost:3000/map
 
    
 
