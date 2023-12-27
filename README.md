@@ -2,8 +2,6 @@
 
 
 
-Obs:
-
 ## Como Rodar: 
 
 ## 1
