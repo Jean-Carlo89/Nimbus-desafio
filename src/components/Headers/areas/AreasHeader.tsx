@@ -82,15 +82,15 @@ const initial_rectangle:Rectangle ={
   id: "",
   bounds: {
     lat: {
-      sup: form.lat_sup,
-      inf: form.lat_inf
+      sup: lat_sup,
+      inf: lat_inf
     },
     lng: {
-      left: form.long_left,
-      right: form.long_right
+      left: long_left,
+      right: long_right
     }
   },
-  description: form.description,
+  description: description,
   is_active: true
 }
 

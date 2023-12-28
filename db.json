@@ -65,21 +65,6 @@
       },
       "description": "primeiro retangulo",
       "is_active": true
-    },
-    {
-      "id": "2897c6fc-2e14-433a-b8fc-9d4f99be7dcf",
-      "bounds": {
-        "lat": {
-          "sup": -13.119138456121432,
-          "inf": -12.852256857531724
-        },
-        "lng": {
-          "left": -38.71157607769945,
-          "right": -38.3147508089443
-        }
-      },
-      "description": "",
-      "is_active": true
     }
   ]
 }

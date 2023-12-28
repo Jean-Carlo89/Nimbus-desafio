@@ -56,7 +56,7 @@ const addMarker = useAddMarker()
 if (form.lat !== null && form.long !== null) {
 
 const initial_marker  : Marker = {
-  id: form.lat + 1,
+  id: lat + 1,
   geoCode: {
     lat: lat,
     lng: long

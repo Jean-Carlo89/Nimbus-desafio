@@ -55,10 +55,10 @@ if (form?.lat !== null && form?.long !== null && form?.radius !==null) {
 
 
 const initial_circle:CircleProps ={
-  center: [form?.lat, form?.long],
-  radius:form?.radius,
-  description: form?.description,
-  id: form?.lat + 1,
+  center: [lat, long],
+  radius:radius,
+  description: description,
+  id: lat + 1,
 is_active:true
 
 }
